@@ -1,0 +1,11 @@
+syntax: glob
+
+*.orig
+*.rej
+*~
+*.swp
+*.bak
+*.pyc
+*.qm
+ui/*.py
+

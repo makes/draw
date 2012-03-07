@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="/">
+    <file>images/color-fill.svg</file>
+    <file>images/document-new.svg</file>
+    <file>images/document-open.svg</file>
+    <file>images/document-save.svg</file>
+    <file>images/draw-ellipse.svg</file>
+    <file>images/draw-freehand.svg</file>
+    <file>images/draw-polygon.svg</file>
+    <file>images/draw-rectangle.svg</file>
+    <file>images/draw-text.svg</file>
+    <file>images/edit-redo.svg</file>
+    <file>images/edit-undo.svg</file>
+    <file>images/select-normal.svg</file>
+  </qresource>
+</RCC>
