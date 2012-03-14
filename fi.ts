@@ -202,19 +202,34 @@
 <context>
     <name>UiMessages</name>
     <message>
-        <location filename="draw.py" line="97"/>
+        <location filename="draw.py" line="172"/>
         <source>You must open or create a drawing before activating these tools. Press Ctrl+N to create a new drawing.</source>
         <translation>Avaa tai luo uusi piirrustus ennen näiden työkalujen käyttöä. Paina Ctrl+N luodaksesi uuden piirroksen.</translation>
     </message>
     <message>
-        <location filename="draw.py" line="103"/>
+        <location filename="draw.py" line="178"/>
         <source>untitled-</source>
         <translation>nimetön-</translation>
     </message>
     <message>
-        <location filename="draw.py" line="108"/>
+        <location filename="draw.py" line="183"/>
         <source>Selected tool</source>
         <translation>Valittu työkalu</translation>
+    </message>
+    <message>
+        <location filename="draw.py" line="188"/>
+        <source>Save As</source>
+        <translation>Tallenna nimellä</translation>
+    </message>
+    <message>
+        <location filename="draw.py" line="193"/>
+        <source>All supported file types</source>
+        <translation>Kaikki tuetut tiedostotyypit</translation>
+    </message>
+    <message>
+        <location filename="draw.py" line="198"/>
+        <source>Open Drawing</source>
+        <translation>Avaa piirros</translation>
     </message>
 </context>
 </TS>
