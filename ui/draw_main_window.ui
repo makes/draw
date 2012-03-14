@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string notr="true">Draw</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/images/app-icon.svg</normaloff>:/images/app-icon.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <property name="margin">
