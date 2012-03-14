@@ -3,182 +3,182 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="ui/draw_main_window.py" line="141"/>
+        <location filename="ui/draw_main_window.py" line="146"/>
         <source>File</source>
         <translation>Tiedosto</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="142"/>
+        <location filename="ui/draw_main_window.py" line="147"/>
         <source>Edit</source>
         <translation>Muokkaa</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="143"/>
+        <location filename="ui/draw_main_window.py" line="148"/>
         <source>Window</source>
         <translation>Ikkuna</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="146"/>
+        <location filename="ui/draw_main_window.py" line="151"/>
         <source>&amp;New</source>
         <translation>&amp;Uusi</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="147"/>
+        <location filename="ui/draw_main_window.py" line="152"/>
         <source>Create new, empty drawing</source>
         <translation>Luo uusi, tyhjä piirros</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="148"/>
+        <location filename="ui/draw_main_window.py" line="153"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="149"/>
+        <location filename="ui/draw_main_window.py" line="154"/>
         <source>Undo</source>
         <translation>Kumoa</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="150"/>
+        <location filename="ui/draw_main_window.py" line="155"/>
         <source>Undo previous action</source>
         <translation>Peru viimeksi suoritettu toiminto</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="151"/>
+        <location filename="ui/draw_main_window.py" line="156"/>
         <source>Ctrl+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="152"/>
+        <location filename="ui/draw_main_window.py" line="157"/>
         <source>Redo</source>
         <translation>Tee uudelleen</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="153"/>
+        <location filename="ui/draw_main_window.py" line="158"/>
         <source>Redo previously undone action</source>
         <translation>Suorita kumottu toiminto uudelleen</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="154"/>
+        <location filename="ui/draw_main_window.py" line="159"/>
         <source>Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="155"/>
+        <location filename="ui/draw_main_window.py" line="160"/>
         <source>&amp;Save</source>
         <translation>&amp;Tallenna</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="156"/>
+        <location filename="ui/draw_main_window.py" line="161"/>
         <source>Save current drawing</source>
         <translation>Tallenna piirros</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="157"/>
+        <location filename="ui/draw_main_window.py" line="162"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="158"/>
+        <location filename="ui/draw_main_window.py" line="163"/>
         <source>&amp;Open</source>
         <translation>&amp;Avaa</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="159"/>
+        <location filename="ui/draw_main_window.py" line="164"/>
         <source>Open existing drawing</source>
         <translation>Avaa olemassa oleva piirros</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="160"/>
+        <location filename="ui/draw_main_window.py" line="165"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="161"/>
+        <location filename="ui/draw_main_window.py" line="166"/>
         <source>Pick tool</source>
         <translation>Valintatyökalu</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="162"/>
+        <location filename="ui/draw_main_window.py" line="167"/>
         <source>Select objects</source>
         <translation>Valitse kohteita</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="163"/>
+        <location filename="ui/draw_main_window.py" line="168"/>
         <source>Rectangle tool</source>
         <translation>Suorakulmiotyökalu</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="164"/>
+        <location filename="ui/draw_main_window.py" line="169"/>
         <source>Draw rectangles</source>
         <translation>Piirrä suorakulmioita</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="165"/>
+        <location filename="ui/draw_main_window.py" line="170"/>
         <source>Ellipse tool</source>
         <translation>Ellipsityökalu</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="166"/>
+        <location filename="ui/draw_main_window.py" line="171"/>
         <source>Draw ellipses</source>
         <translation>Piirrä ellipsejä</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="167"/>
+        <location filename="ui/draw_main_window.py" line="172"/>
         <source>Text tool</source>
         <translation>Tekstityökalu</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="168"/>
+        <location filename="ui/draw_main_window.py" line="173"/>
         <source>Add text to your drawing</source>
         <translation>Lisää tekstiä piirrokseen</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="171"/>
+        <location filename="ui/draw_main_window.py" line="176"/>
         <source>&amp;Close</source>
         <translation>&amp;Sulje</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="172"/>
+        <location filename="ui/draw_main_window.py" line="177"/>
         <source>Close current drawing</source>
         <translation>Sulje piirros</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="173"/>
+        <location filename="ui/draw_main_window.py" line="178"/>
         <source>Save &amp;As...</source>
         <translation>Tallenna &amp;nimellä...</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="174"/>
+        <location filename="ui/draw_main_window.py" line="179"/>
         <source>Save current drawing as a new file</source>
         <translation>Tallenna piirros tiedostoon</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="175"/>
+        <location filename="ui/draw_main_window.py" line="180"/>
         <source>Exit</source>
         <translation>Poistu</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="176"/>
+        <location filename="ui/draw_main_window.py" line="181"/>
         <source>Exit application</source>
         <translation>Poistu ohjelmasta</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="169"/>
+        <location filename="ui/draw_main_window.py" line="174"/>
         <source>Pen tool</source>
         <translation>Kynätyökalu</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="170"/>
+        <location filename="ui/draw_main_window.py" line="175"/>
         <source>Draw lines</source>
         <translation>Piirrä viivoja</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="144"/>
+        <location filename="ui/draw_main_window.py" line="149"/>
         <source>Drawing tools</source>
         <translation>Piirtotyökalut</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="145"/>
+        <location filename="ui/draw_main_window.py" line="150"/>
         <source>Main toolbar</source>
         <translation>Päätyökalupalkki</translation>
     </message>
@@ -202,32 +202,32 @@
 <context>
     <name>UiMessages</name>
     <message>
-        <location filename="draw.py" line="172"/>
+        <location filename="draw.py" line="182"/>
         <source>You must open or create a drawing before activating these tools. Press Ctrl+N to create a new drawing.</source>
         <translation>Avaa tai luo uusi piirrustus ennen näiden työkalujen käyttöä. Paina Ctrl+N luodaksesi uuden piirroksen.</translation>
     </message>
     <message>
-        <location filename="draw.py" line="178"/>
+        <location filename="draw.py" line="188"/>
         <source>untitled-</source>
         <translation>nimetön-</translation>
     </message>
     <message>
-        <location filename="draw.py" line="183"/>
+        <location filename="draw.py" line="193"/>
         <source>Selected tool</source>
         <translation>Valittu työkalu</translation>
     </message>
     <message>
-        <location filename="draw.py" line="188"/>
+        <location filename="draw.py" line="198"/>
         <source>Save As</source>
         <translation>Tallenna nimellä</translation>
     </message>
     <message>
-        <location filename="draw.py" line="193"/>
+        <location filename="draw.py" line="203"/>
         <source>All supported file types</source>
         <translation>Kaikki tuetut tiedostotyypit</translation>
     </message>
     <message>
-        <location filename="draw.py" line="198"/>
+        <location filename="draw.py" line="208"/>
         <source>Open Drawing</source>
         <translation>Avaa piirros</translation>
     </message>

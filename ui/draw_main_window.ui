@@ -183,6 +183,9 @@
    </property>
   </action>
   <action name="actionSelectPickTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="images.qrc">
      <normaloff>:/images/select-normal.svg</normaloff>:/images/select-normal.svg</iconset>
@@ -195,6 +198,9 @@
    </property>
   </action>
   <action name="actionSelectRectangleTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="images.qrc">
      <normaloff>:/images/draw-rectangle.svg</normaloff>:/images/draw-rectangle.svg</iconset>
@@ -207,6 +213,9 @@
    </property>
   </action>
   <action name="actionSelectEllipseTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="images.qrc">
      <normaloff>:/images/draw-ellipse.svg</normaloff>:/images/draw-ellipse.svg</iconset>
@@ -219,6 +228,9 @@
    </property>
   </action>
   <action name="actionSelectTextTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="images.qrc">
      <normaloff>:/images/draw-text.svg</normaloff>:/images/draw-text.svg</iconset>
@@ -231,6 +243,9 @@
    </property>
   </action>
   <action name="actionSelectPenTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="images.qrc">
      <normaloff>:/images/draw-freehand.svg</normaloff>:/images/draw-freehand.svg</iconset>

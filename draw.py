@@ -36,6 +36,25 @@ class DrawMainWindow(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        # Add selector action info to each tool.
+        # TODO tools should be fully dynamic to avoid this.
+        self.get_tool("Pick").selector = self.ui.actionSelectPickTool
+        self.get_tool("Pen").selector = self.ui.actionSelectPenTool
+        #self.get_tool("Rectangle").selector = \
+        #    self.ui.actionSelectRectangleTool
+        #self.get_tool("Ellipse").selector = self.ui.actionSelectEllipseTool
+        #self.get_tool("Text").selector = self.ui.actionSelectTextTool
+
+        # Create a mutually exclusive action group for drawing tools
+        self.ui.tool_selectors = QtGui.QActionGroup(self)
+        self.ui.tool_selectors.setExclusive(True)
+        self.ui.tool_selectors.addAction(self.ui.actionSelectPickTool)
+        self.ui.tool_selectors.addAction(self.ui.actionSelectPenTool)
+        self.ui.tool_selectors.addAction(self.ui.actionSelectRectangleTool)
+        self.ui.tool_selectors.addAction(self.ui.actionSelectEllipseTool)
+        self.ui.tool_selectors.addAction(self.ui.actionSelectTextTool)
+
         self._connect_slots()
         self._init_interface()
 
@@ -45,10 +64,20 @@ class DrawMainWindow(QtGui.QMainWindow):
         self.ui.actionSaveAs.triggered.connect(self._handle_save_as)
         self.ui.actionOpen.triggered.connect(self._handle_open)
 
+        # TODO make tools load dynamically
         self.ui.actionSelectPickTool.triggered.connect(
             functools.partial(self.set_current_tool, self.get_tool("Pick")))
         self.ui.actionSelectPenTool.triggered.connect(
             functools.partial(self.set_current_tool, self.get_tool("Pen")))
+        self.ui.actionSelectRectangleTool.triggered.connect(
+            functools.partial(self.set_current_tool, self.get_tool("Rectangle")))
+        self.ui.actionSelectEllipseTool.triggered.connect(
+            functools.partial(self.set_current_tool, self.get_tool("Ellipse")))
+        self.ui.actionSelectTextTool.triggered.connect(
+            functools.partial(self.set_current_tool, self.get_tool("Text")))
+
+        self.ui.mdiArea.subWindowActivated.connect(
+                self.subwindow_focus_changed)
 
         self.ui.menuWindow.aboutToShow.connect(self.update_window_menu)
 
@@ -128,15 +157,28 @@ class DrawMainWindow(QtGui.QMainWindow):
         else:
             return None
 
+    def clear_tool_selection(self):
+        for action in self.ui.tool_selectors.actions():
+            action.setChecked(False)
+
+    def update_tool_buttons(self, tool):
+        """ Make sure the correct tool button shows as pressed """
+        for action in self.ui.tool_selectors.actions():
+            if tool.selector is action:
+                action.setChecked(True)
+                return
+
     def set_current_tool(self, tool):
         self.ui.statusbar.clearMessage()
         canvas = self.get_active_canvas()
         if not canvas:
             self.ui.statusbar.showMessage(self.ui_messages.tool_unavailable,
                                           8000)
+            self.clear_tool_selection()
             return
         self.ui.statusbar.showMessage(self.ui_messages.selected_tool + ": "
                                       + tool.get_name(), 3000)
+        self.update_tool_buttons(tool)
         canvas.set_current_tool(tool)
 
     def get_active_canvas(self):
@@ -158,6 +200,15 @@ class DrawMainWindow(QtGui.QMainWindow):
             action.setChecked(window == self.ui.mdiArea.activeSubWindow())
             action.triggered.connect(
                 functools.partial(self.set_active_subwindow, window))
+
+
+
+    def subwindow_focus_changed(self):
+        canvas = self.get_active_canvas()
+        if not canvas:
+            self.clear_tool_selection()
+            return
+        self.set_current_tool(canvas.tool)
 
     def changeEvent(self, event):
         if type(event) == QtCore.QEvent.LanguageChange:
