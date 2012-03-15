@@ -31,7 +31,8 @@ class DrawMainWindow(QtGui.QMainWindow):
         for importer, modname, _ in pkgutil.iter_modules([formats_path]):
             full_modname = 'formats.%s' % modname
             module = importer.find_module(modname).load_module(full_modname)
-            self._formats[modname] = module
+            if module.ENABLED:
+                self._formats[modname] = module
 
         QtGui.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()

@@ -6,6 +6,9 @@ from libs import pysvg
 from libs.pysvg import parser as pysvg_parser
 from libs.pysvg import builders as pysvg_builders
 
+# This module is disabled, as the school assignment does not allow the use of
+# an external SVG library.
+ENABLED = False
 FILE_EXTENSIONS = ['.svg']
 FILTER_STRING = "SVG (*.svg)"
 
