@@ -161,6 +161,7 @@ class DrawMainWindow(QtGui.QMainWindow):
     def clear_tool_selection(self):
         for action in self.ui.tool_selectors.actions():
             action.setChecked(False)
+        self.ui.toolOptionsDock.setWidget(None)
 
     def update_tool_buttons(self, tool):
         """ Make sure the correct tool button shows as pressed """
@@ -171,6 +172,7 @@ class DrawMainWindow(QtGui.QMainWindow):
 
     def set_current_tool(self, tool):
         self.ui.statusbar.clearMessage()
+        self.ui.toolOptionsDock.setWidget(None)
         canvas = self.get_active_canvas()
         if not canvas:
             self.ui.statusbar.showMessage(self.ui_messages.tool_unavailable,
@@ -180,6 +182,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         self.ui.statusbar.showMessage(self.ui_messages.selected_tool + ": "
                                       + tool.get_name(), 3000)
         self.update_tool_buttons(tool)
+        self.ui.toolOptionsDock.setWidget(tool.options_widget)
         canvas.set_current_tool(tool)
 
     def get_active_canvas(self):

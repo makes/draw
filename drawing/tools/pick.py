@@ -19,10 +19,15 @@ class Pick(QtCore.QObject):
             return True
         return False
 
+    def get_options_widget(self):
+        return None
+
     @classmethod
     def get_name(self):
         return QtGui.QApplication.translate("Pick",
                                             "Pick",
                                             None,
                                             QtGui.QApplication.UnicodeUTF8)
+
+    options_widget = property(get_options_widget)
 

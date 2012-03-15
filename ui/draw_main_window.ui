@@ -27,7 +27,7 @@
       <property name="documentMode">
        <bool>true</bool>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="widget">
        <property name="windowTitle">
         <string/>
        </property>
@@ -74,7 +74,7 @@
    <addaction name="menuWindow"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
+  <widget class="QToolBar" name="drawingToolBar">
    <property name="windowTitle">
     <string>Drawing tools</string>
    </property>
@@ -90,7 +90,7 @@
    <addaction name="actionSelectEllipseTool"/>
    <addaction name="actionSelectTextTool"/>
   </widget>
-  <widget class="QToolBar" name="toolBar_2">
+  <widget class="QToolBar" name="mainToolBar">
    <property name="windowTitle">
     <string>Main toolbar</string>
    </property>
@@ -106,6 +106,21 @@
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
+  </widget>
+  <widget class="QDockWidget" name="toolOptionsDock">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Tool Options</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="toolOptions"/>
   </widget>
   <action name="actionNew">
    <property name="icon">
