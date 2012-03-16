@@ -38,6 +38,35 @@ class DrawMainWindow(QtGui.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # Create undo stuff
+        undo_placeholder = self.ui.actionUndo
+        redo_placeholder = self.ui.actionRedo
+        self.undo = QtGui.QUndoGroup(self)
+        # Grab icon, tooltip, etc. from data created in Qt Designer
+        undo_action = self.undo.createUndoAction(self,
+                                                 undo_placeholder.text())
+        undo_action.setIcon(undo_placeholder.icon())
+        undo_action.setToolTip(undo_placeholder.toolTip())
+        undo_action.setShortcut(undo_placeholder.shortcut())
+        undo_action.setObjectName(undo_placeholder.objectName())
+        redo_action = self.undo.createRedoAction(self,
+                                                 redo_placeholder.text())
+        redo_action.setIcon(redo_placeholder.icon())
+        redo_action.setToolTip(redo_placeholder.toolTip())
+        redo_action.setShortcut(redo_placeholder.shortcut())
+        redo_action.setObjectName(redo_placeholder.objectName())
+        # Replace original actions with the newly created ones
+        self.ui.actionUndo = undo_action
+        self.ui.actionRedo = redo_action
+        self.ui.menuEdit.insertAction(undo_placeholder, self.ui.actionUndo)
+        self.ui.menuEdit.removeAction(undo_placeholder)
+        self.ui.menuEdit.insertAction(redo_placeholder, self.ui.actionRedo)
+        self.ui.menuEdit.removeAction(redo_placeholder)
+        self.ui.mainToolBar.insertAction(undo_placeholder, self.ui.actionUndo)
+        self.ui.mainToolBar.removeAction(undo_placeholder)
+        self.ui.mainToolBar.insertAction(redo_placeholder, self.ui.actionRedo)
+        self.ui.mainToolBar.removeAction(redo_placeholder)
+
         # Add selector action info to each tool.
         # TODO tools should be fully dynamic to avoid this.
         self.get_tool("Pick").selector = self.ui.actionSelectPickTool
@@ -60,10 +89,12 @@ class DrawMainWindow(QtGui.QMainWindow):
         self._init_interface()
 
     def _connect_slots(self):
-        self.ui.actionNew.triggered.connect(self._handle_new)
-        self.ui.actionSave.triggered.connect(self._handle_save)
-        self.ui.actionSaveAs.triggered.connect(self._handle_save_as)
-        self.ui.actionOpen.triggered.connect(self._handle_open)
+        self.ui.actionNew.triggered.connect(self.new_drawing)
+        self.ui.actionSave.triggered.connect(self.save)
+        self.ui.actionSaveAs.triggered.connect(self.save_as)
+        self.ui.actionOpen.triggered.connect(self.open)
+        self.ui.actionClose.triggered.connect(self.close_active_subwindow)
+        self.ui.actionExit.triggered.connect(self.exit)
 
         # TODO make tools load dynamically
         self.ui.actionSelectPickTool.triggered.connect(
@@ -85,19 +116,55 @@ class DrawMainWindow(QtGui.QMainWindow):
     def _init_interface(self):
         self.show()
 
-    def _handle_new(self):
-        new_document = drawing.Document()
+    def new_subwindow(self, document):
         new_canvas = drawing.Canvas(self.get_tool(self.DEFAULT_TOOL_CLASSNAME),
-                                    new_document)
+                                    document)
+        self.undo.addStack(new_canvas.undo_stack)
         new_canvas.setSceneRect(0, 0, 10000, 10000)
-        new_window = self.ui.mdiArea.addSubWindow(new_canvas)
+        new_window = drawing.Window(self, self.ui.mdiArea, new_canvas)
+        new_window.window_closed.connect(self.subwindow_closed)
+        new_window.show()
+        return new_window
+
+    def close_active_subwindow(self):
+        window = self.get_active_subwindow()
+        if not window:
+            return False
+        window.close()
+
+    def subwindow_closed(self, window):
+        self.ui.mdiArea.removeSubWindow(window)
+        self.undo.removeStack(window.canvas.undo_stack)
+
+    def closeEvent(self, event):
+        confirmed = True
+        for window in self.get_subwindows():
+            self.set_active_subwindow(window)
+            confirmed = window.close()
+            if not confirmed:
+                event.ignore()
+                return
+        event.accept()
+
+    def new_drawing(self):
+        new_document = drawing.Document()
+        new_window = self.new_subwindow(new_document)
         self._new_count = self._new_count + 1
         new_window.setWindowTitle(self.ui_messages.default_doc_name
                                   + str(self._new_count))
         new_window.show()
 
-    def _handle_save(self):
-        pass
+    def save(self):
+        canvas = self.get_active_canvas()
+        if not canvas:
+            return False
+        if not canvas.filename:
+            return self.save_as()
+        else:
+            fmt = self.get_format_by_filename(canvas.filename)
+            fmt.save(canvas.filename, canvas)
+            canvas.dirty = False
+            return True
 
     def get_file_extension_filters(self):
         return [self._formats[fmt].FILTER_STRING for fmt in self._formats]
@@ -109,9 +176,9 @@ class DrawMainWindow(QtGui.QMainWindow):
                 return self._formats[fmt]
         return self._formats[self.DEFAULT_FORMAT_MODULENAME] 
 
-    def _handle_save_as(self):
+    def save_as(self):
         if not self.get_active_canvas():
-            return
+            return False
         filters = self.get_file_extension_filters()
         filter_string = ";;".join(filters)
         dflt = self._formats[self.DEFAULT_FORMAT_MODULENAME].FILTER_STRING
@@ -120,12 +187,15 @@ class DrawMainWindow(QtGui.QMainWindow):
                                                  filter = filter_string,
                                                  selectedFilter = dflt)
         if not path:
-            return
+            return False
 
         fmt = self.get_format_by_filename(path)
         fmt.save(path, self.get_active_canvas())
+        self.get_active_subwindow().filename = path
+        self.get_active_canvas().dirty = False
+        return True
 
-    def _handle_open(self):
+    def open(self):
         filters = self.get_file_extension_filters()
         all_extensions = []
         for fmt in self._formats:
@@ -145,12 +215,13 @@ class DrawMainWindow(QtGui.QMainWindow):
         for path in path_list:
             fmt = self.get_format_by_filename(path)
             document = drawing.Document()
-            new_canvas = drawing.Canvas(self.get_tool(self.DEFAULT_TOOL_CLASSNAME),
-                                        document)
-            new_window = self.ui.mdiArea.addSubWindow(new_canvas)
-            new_window.setWindowTitle(path)
-            fmt.load(str(path), new_canvas)
+            new_window = self.new_subwindow(document)
+            new_window.filename = path
+            fmt.load(str(path), new_window.get_canvas())
             new_window.show()
+
+    def exit(self):
+        self.close()
 
     def get_tool(self, name):
         if name in self._tools:
@@ -186,33 +257,38 @@ class DrawMainWindow(QtGui.QMainWindow):
         canvas.set_current_tool(tool)
 
     def get_active_canvas(self):
-        window = self.ui.mdiArea.activeSubWindow()
+        window = self.get_active_subwindow()
         if not window:
             return None
         return window.widget()
 
+    def get_active_subwindow(self):
+        return self.ui.mdiArea.activeSubWindow()
+
     def set_active_subwindow(self, window):
         self.ui.mdiArea.setActiveSubWindow(window)
 
+    def get_subwindows(self):
+        return self.ui.mdiArea.subWindowList()
+
     def update_window_menu(self):
-        windows = self.ui.mdiArea.subWindowList()
         self.ui.menuWindow.clear()
 
-        for window in windows:
+        for window in self.get_subwindows():
             action = self.ui.menuWindow.addAction(window.windowTitle())
             action.setCheckable(True)
-            action.setChecked(window == self.ui.mdiArea.activeSubWindow())
+            action.setChecked(window == self.get_active_subwindow())
             action.triggered.connect(
                 functools.partial(self.set_active_subwindow, window))
-
-
 
     def subwindow_focus_changed(self):
         canvas = self.get_active_canvas()
         if not canvas:
             self.clear_tool_selection()
+            self.undo.setActiveStack(None)
             return
         self.set_current_tool(canvas.tool)
+        self.undo.setActiveStack(canvas.undo_stack)
 
     def changeEvent(self, event):
         if type(event) == QtCore.QEvent.LanguageChange:

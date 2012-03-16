@@ -2,6 +2,7 @@ from PyQt4 import QtCore, QtGui
 
 import drawing
 from drawing.tools.options.pen import ToolOptionsPen
+from drawing.tools.commands.create import CreateCommand
 
 class Pen(QtCore.QObject):
     DEFAULT_COLOR = "green"
@@ -33,8 +34,16 @@ class Pen(QtCore.QObject):
                                                          self._pen)
             self._canvas.setMouseTracking(True)
         else:
-            self._active = False
             self._canvas.setMouseTracking(False)
+            self.finalize()
+
+    def finalize(self):
+        self._active = False
+        command = CreateCommand(self._object,
+                                self._canvas.document,
+                                self._object.pos())
+        self._canvas.document.removeItem(self._object)
+        self._canvas.execute(command)
 
     def refresh(self, point):
         line = self._object.line()
