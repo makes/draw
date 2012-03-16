@@ -1,20 +1,20 @@
 from PyQt4 import QtCore, QtGui
 
 import drawing
-from drawing.tools.options.pen import ToolOptionsPen
+from drawing.tools.options.ellipse import ToolOptionsEllipse
 from drawing.tools.commands.create import CreateCommand
 
-class Pen(QtCore.QObject):
-    DEFAULT_COLOR = "green"
+class Ellipse(QtCore.QObject):
+    DEFAULT_COLOR = "red"
     
     def __init__(self):
-        super(Pen, self).__init__()
+        super(Ellipse, self).__init__()
         self._canvas = None
         self._active = False
         self._object = None
         initial_color = QtGui.QColor(self.DEFAULT_COLOR)
         self._pen = QtGui.QPen(initial_color)
-        self._options_widget = ToolOptionsPen(initial_color)
+        self._options_widget = ToolOptionsEllipse(initial_color)
         self._connect_slots()
 
     def _connect_slots(self):
@@ -25,13 +25,16 @@ class Pen(QtCore.QObject):
         canvas.document.installEventFilter(self)
 
     def activate(self, point):
+        self._canvas.setViewportUpdateMode(
+            QtGui.QGraphicsView.FullViewportUpdate)
         if not self._active:  # First click - create new line
             self._active = True
-            self._object = self._canvas.document.addLine(point.x(),
-                                                         point.y(),
-                                                         point.x(),
-                                                         point.y(),
-                                                         self._pen)
+            self._object = self._canvas.document.addEllipse(point.x(),
+                                                            point.y(),
+                                                            0,
+                                                            0,
+                                                            self._pen)
+            self._qrect = self._object.rect()
             self._canvas.setMouseTracking(True)
         else:
             self._canvas.setMouseTracking(False)
@@ -44,16 +47,22 @@ class Pen(QtCore.QObject):
                                 self._object.pos())
         self._canvas.document.removeItem(self._object)
         self._canvas.execute(command)
+        self._canvas.setViewportUpdateMode(
+            QtGui.QGraphicsView.MinimalViewportUpdate)
 
     def refresh(self, point):
-        line = self._object.line()
-        self._object.setLine(line.x1(), line.y1(), point.x(), point.y())
+        rect = self._object.rect()
+        self._qrect.setWidth(point.x() - self._qrect.x())
+        self._qrect.setHeight(point.y() - self._qrect.y())
+        self._object.setRect(self._qrect.normalized())
 
     def abort(self):
         if not self._active:
             return
         self._canvas.setMouseTracking(False)
         self._canvas.document.removeItem(self._object)
+        self._canvas.setViewportUpdateMode(
+            QtGui.QGraphicsView.MinimalViewportUpdate)
         self._active = False
 
     def eventFilter(self, obj, event):
@@ -79,8 +88,8 @@ class Pen(QtCore.QObject):
 
     @classmethod
     def get_name(self):
-        return QtGui.QApplication.translate("Pen",
-                                            "Pen",
+        return QtGui.QApplication.translate("Ellipse",
+                                            "Ellipse",
                                             None,
                                             QtGui.QApplication.UnicodeUTF8)
 

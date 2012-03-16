@@ -3,9 +3,17 @@
 <context>
     <name>ColorSwatch</name>
     <message>
-        <location filename="widgets/color_swatch.pyw" line="39"/>
+        <location filename="widgets/color_swatch.pyw" line="40"/>
         <source>Select Color</source>
         <translation>Valitse väri</translation>
+    </message>
+</context>
+<context>
+    <name>Ellipse</name>
+    <message>
+        <location filename="drawing/tools/ellipse.py" line="91"/>
+        <source>Ellipse</source>
+        <translation>Ellipsi</translation>
     </message>
 </context>
 <context>
@@ -199,7 +207,7 @@
 <context>
     <name>Pen</name>
     <message>
-        <location filename="drawing/tools/pen.py" line="85"/>
+        <location filename="drawing/tools/pen.py" line="82"/>
         <source>Pen</source>
         <translation>Kynä</translation>
     </message>
@@ -210,6 +218,27 @@
         <location filename="drawing/tools/pick.py" line="27"/>
         <source>Pick</source>
         <translation>Valintatyökalu</translation>
+    </message>
+</context>
+<context>
+    <name>Rect</name>
+    <message>
+        <location filename="drawing/tools/rect.py" line="85"/>
+        <source>Rectangle</source>
+        <translation>Suorakulmio</translation>
+    </message>
+</context>
+<context>
+    <name>ToolOptionsEllipse</name>
+    <message>
+        <location filename="ui/tool_options_ellipse.py" line="48"/>
+        <source>Tool Options: Ellipse</source>
+        <translation>Työkalun valinnat: Ellipse</translation>
+    </message>
+    <message>
+        <location filename="ui/tool_options_ellipse.py" line="49"/>
+        <source>Ellipse</source>
+        <translation>Ellipsi</translation>
     </message>
 </context>
 <context>
@@ -226,34 +255,47 @@
     </message>
 </context>
 <context>
+    <name>ToolOptionsRect</name>
+    <message>
+        <location filename="ui/tool_options_rect.py" line="48"/>
+        <source>Tool Options: Rectangle</source>
+        <translation>Työkalun valinnat: Suorakulmio</translation>
+    </message>
+    <message>
+        <location filename="ui/tool_options_rect.py" line="49"/>
+        <source>Rectangle</source>
+        <translation type="unfinished">Suorakulmio</translation>
+    </message>
+</context>
+<context>
     <name>UiMessages</name>
     <message>
-        <location filename="draw.py" line="322"/>
+        <location filename="draw.py" line="323"/>
         <source>You must open or create a drawing before activating these tools. Press Ctrl+N to create a new drawing.</source>
         <translation>Avaa tai luo uusi piirrustus ennen näiden työkalujen käyttöä. Paina Ctrl+N luodaksesi uuden piirroksen.</translation>
     </message>
     <message>
-        <location filename="draw.py" line="328"/>
+        <location filename="draw.py" line="329"/>
         <source>untitled-</source>
         <translation>nimetön-</translation>
     </message>
     <message>
-        <location filename="draw.py" line="333"/>
+        <location filename="draw.py" line="334"/>
         <source>Selected tool</source>
         <translation>Valittu työkalu</translation>
     </message>
     <message>
-        <location filename="draw.py" line="338"/>
+        <location filename="draw.py" line="339"/>
         <source>Save As</source>
         <translation>Tallenna nimellä</translation>
     </message>
     <message>
-        <location filename="draw.py" line="343"/>
+        <location filename="draw.py" line="344"/>
         <source>All supported file types</source>
         <translation>Kaikki tuetut tiedostotyypit</translation>
     </message>
     <message>
-        <location filename="draw.py" line="348"/>
+        <location filename="draw.py" line="349"/>
         <source>Open Drawing</source>
         <translation>Avaa piirros</translation>
     </message>
@@ -268,7 +310,7 @@
     <message>
         <location filename="drawing/window.py" line="73"/>
         <source>The drawing has been modified.</source>
-        <translation>Piirustusta on muokattu.</translation>
+        <translation>Piirrosta on muokattu.</translation>
     </message>
     <message>
         <location filename="drawing/window.py" line="78"/>

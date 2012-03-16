@@ -69,11 +69,12 @@ class DrawMainWindow(QtGui.QMainWindow):
 
         # Add selector action info to each tool.
         # TODO tools should be fully dynamic to avoid this.
+        #      for now it doesn't matter as there are only a few.
         self.get_tool("Pick").selector = self.ui.actionSelectPickTool
         self.get_tool("Pen").selector = self.ui.actionSelectPenTool
-        #self.get_tool("Rectangle").selector = \
-        #    self.ui.actionSelectRectangleTool
-        #self.get_tool("Ellipse").selector = self.ui.actionSelectEllipseTool
+        self.get_tool("Rect").selector = \
+            self.ui.actionSelectRectangleTool
+        self.get_tool("Ellipse").selector = self.ui.actionSelectEllipseTool
         #self.get_tool("Text").selector = self.ui.actionSelectTextTool
 
         # Create a mutually exclusive action group for drawing tools
@@ -102,7 +103,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         self.ui.actionSelectPenTool.triggered.connect(
             functools.partial(self.set_current_tool, self.get_tool("Pen")))
         self.ui.actionSelectRectangleTool.triggered.connect(
-            functools.partial(self.set_current_tool, self.get_tool("Rectangle")))
+            functools.partial(self.set_current_tool, self.get_tool("Rect")))
         self.ui.actionSelectEllipseTool.triggered.connect(
             functools.partial(self.set_current_tool, self.get_tool("Ellipse")))
         self.ui.actionSelectTextTool.triggered.connect(

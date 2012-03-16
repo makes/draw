@@ -23,7 +23,8 @@ class ColorSwatch(QtGui.QFrame):
         color = QtGui.QColorDialog.getColor(self._current_color,
                                             self,
                                             self._ui_messages.select_color)
-        self.set_color(color)
+        if color.isValid():
+            self.set_color(color)
 
     def changeEvent(self, event):
         if type(event) == QtCore.QEvent.LanguageChange:
