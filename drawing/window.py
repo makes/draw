@@ -7,6 +7,7 @@ class Window(QtGui.QMdiSubWindow):
 
     def __init__(self, main, parent, canvas):
         super(Window, self).__init__(parent)
+        self._ui_messages = UiMessages()
         self.setWidget(canvas)
         self._canvas = canvas
         self._main = main
@@ -17,13 +18,13 @@ class Window(QtGui.QMdiSubWindow):
             self.window_closed.emit(self)
             return
         confirm_dialog = QtGui.QMessageBox(QtGui.QMessageBox.Question,
-                                           "Unsaved Changes",
-                                           "The drawing has been modified.",
+                                           self._ui_messages.unsaved_changes,
+                                           self._ui_messages.drawing_modified,
                                            QtGui.QMessageBox.Save |
                                            QtGui.QMessageBox.Discard |
                                            QtGui.QMessageBox.Cancel,
                                            self)
-        confirm_dialog.setInformativeText("Do you want to save your changes?")
+        confirm_dialog.setInformativeText(self._ui_messages.save_question)
         confirm_dialog.setDefaultButton(QtGui.QMessageBox.Save)
         dialog_result = confirm_dialog.exec_()
         if dialog_result == QtGui.QMessageBox.Save:
@@ -58,4 +59,24 @@ class Window(QtGui.QMdiSubWindow):
 
     canvas = property(get_canvas, set_canvas)
     filename = property(get_filename, set_filename)
+
+class UiMessages(object):
+    def __init__(self):
+        self.translate_messages()
+
+    def translate_messages(self):
+        self.unsaved_changes = QtGui.QApplication.translate("Window",
+            "Unsaved Changes",
+            None,
+            QtGui.QApplication.UnicodeUTF8)
+
+        self.drawing_modified = QtGui.QApplication.translate("Window",
+            "The drawing has been modified.",
+            None,
+            QtGui.QApplication.UnicodeUTF8)
+
+        self.save_question = QtGui.QApplication.translate("Window",
+            "Save changes?",
+            None,
+            QtGui.QApplication.UnicodeUTF8)
 

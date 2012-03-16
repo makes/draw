@@ -1,15 +1,18 @@
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 
 import drawing
 import drawing.tools
 
 class Canvas(QtGui.QGraphicsView):
+    dirty_changed = QtCore.pyqtSignal(bool)
+    
     def __init__(self, default_tool, document):
         super(Canvas, self).__init__(document)
         self._current_tool = None
         self.set_current_tool(default_tool)
         self._undo_stack = QtGui.QUndoStack(self)
         self._filename = None
+        document.dirty_changed.connect(self.forward_dirty_changed)
 
     def get_current_tool(self):
         return self._current_tool
@@ -39,13 +42,15 @@ class Canvas(QtGui.QGraphicsView):
     def get_filename(self):
         return self._filename
 
+    def forward_dirty_changed(self, dirty):
+        self.dirty_changed.emit(dirty)
+
     def set_dirty(self, dirty):
         self.document.dirty = dirty
 
     def get_dirty(self):
         return self.document.get_dirty()
 
-    dirty = property(get_dirty, set_dirty)
     document = property(get_document, set_document)
     tool = property(get_current_tool, set_current_tool)
     undo_stack = property(get_undo_stack)

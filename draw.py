@@ -116,13 +116,32 @@ class DrawMainWindow(QtGui.QMainWindow):
     def _init_interface(self):
         self.show()
 
-    def new_subwindow(self, document):
+    def update_file_actions(self, canvas):
+        if not canvas:
+            self.ui.actionSave.setEnabled(False)
+            self.ui.actionSaveAs.setEnabled(False)
+            self.ui.actionClose.setEnabled(False)
+        elif canvas.get_dirty():
+            self.ui.actionSave.setEnabled(True)
+            self.ui.actionSaveAs.setEnabled(True)
+        else:
+            self.ui.actionSave.setEnabled(False)
+            self.ui.actionSaveAs.setEnabled(False)
+
+    def dirty_changed(self, dirty):
+        self.update_file_actions(self.get_active_canvas())
+
+    def new_subwindow(self, document = None):
+        if not document:
+            document = drawing.Document()
         new_canvas = drawing.Canvas(self.get_tool(self.DEFAULT_TOOL_CLASSNAME),
                                     document)
         self.undo.addStack(new_canvas.undo_stack)
         new_canvas.setSceneRect(0, 0, 10000, 10000)
         new_window = drawing.Window(self, self.ui.mdiArea, new_canvas)
         new_window.window_closed.connect(self.subwindow_closed)
+        new_window.canvas.dirty_changed.connect(self.dirty_changed)
+        self.ui.actionClose.setEnabled(True)
         new_window.show()
         return new_window
 
@@ -147,8 +166,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         event.accept()
 
     def new_drawing(self):
-        new_document = drawing.Document()
-        new_window = self.new_subwindow(new_document)
+        new_window = self.new_subwindow()
         self._new_count = self._new_count + 1
         new_window.setWindowTitle(self.ui_messages.default_doc_name
                                   + str(self._new_count))
@@ -283,6 +301,7 @@ class DrawMainWindow(QtGui.QMainWindow):
 
     def subwindow_focus_changed(self):
         canvas = self.get_active_canvas()
+        self.update_file_actions(canvas)
         if not canvas:
             self.clear_tool_selection()
             self.undo.setActiveStack(None)

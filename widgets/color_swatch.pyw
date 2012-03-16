@@ -5,6 +5,7 @@ class ColorSwatch(QtGui.QFrame):
 
     def __init__(self, parent = None):
         super(ColorSwatch, self).__init__(parent)
+        self._ui_messages = UiMessages()
         self.setAutoFillBackground(True)
         self.set_color(QtGui.QColor("red"))
 
@@ -21,10 +22,24 @@ class ColorSwatch(QtGui.QFrame):
     def mousePressEvent(self, event):
         color = QtGui.QColorDialog.getColor(self._current_color,
                                             self,
-                                            "Select Color")
+                                            self._ui_messages.select_color)
         self.set_color(color)
 
+    def changeEvent(self, event):
+        if type(event) == QtCore.QEvent.LanguageChange:
+            self.ui_messages.translate_messages()
+
     color = property(get_color, set_color)
+
+class UiMessages(object):
+    def __init__(self):
+        self.translate_messages()
+
+    def translate_messages(self):
+        self.select_color = QtGui.QApplication.translate("ColorSwatch",
+            "Select Color",
+            None,
+            QtGui.QApplication.UnicodeUTF8)
 
 if __name__ == '__main__':
     import sys
