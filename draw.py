@@ -75,7 +75,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         self.get_tool("Rect").selector = \
             self.ui.actionSelectRectangleTool
         self.get_tool("Ellipse").selector = self.ui.actionSelectEllipseTool
-        #self.get_tool("Text").selector = self.ui.actionSelectTextTool
+        #self.get_toolt"Text").selector = self.ui.actionSelectTextTool
 
         # Create a mutually exclusive action group for drawing tools
         self.ui.tool_selectors = QtGui.QActionGroup(self)
@@ -122,14 +122,15 @@ class DrawMainWindow(QtGui.QMainWindow):
             self.ui.actionSave.setEnabled(False)
             self.ui.actionSaveAs.setEnabled(False)
             self.ui.actionClose.setEnabled(False)
-        elif canvas.get_dirty():
-            self.ui.actionSave.setEnabled(True)
-            self.ui.actionSaveAs.setEnabled(True)
-        else:
+        elif canvas.is_clean():
             self.ui.actionSave.setEnabled(False)
             self.ui.actionSaveAs.setEnabled(False)
+        else:
+            self.ui.actionSave.setEnabled(True)
+            self.ui.actionSaveAs.setEnabled(True)
 
-    def dirty_changed(self, dirty):
+    def clean_changed(self, clean):
+        print "Clean changed: " + str(clean)
         self.update_file_actions(self.get_active_canvas())
 
     def new_subwindow(self, document = None):
@@ -137,11 +138,11 @@ class DrawMainWindow(QtGui.QMainWindow):
             document = drawing.Document()
         new_canvas = drawing.Canvas(self.get_tool(self.DEFAULT_TOOL_CLASSNAME),
                                     document)
-        self.undo.addStack(new_canvas.undo_stack)
+        self.undo.addStack(new_canvas.get_undo_stack())
         new_canvas.setSceneRect(0, 0, 10000, 10000)
         new_window = drawing.Window(self, self.ui.mdiArea, new_canvas)
         new_window.window_closed.connect(self.subwindow_closed)
-        new_window.canvas.dirty_changed.connect(self.dirty_changed)
+        new_window.canvas.clean_changed.connect(self.clean_changed)
         self.ui.actionClose.setEnabled(True)
         new_window.show()
         return new_window
@@ -154,7 +155,7 @@ class DrawMainWindow(QtGui.QMainWindow):
 
     def subwindow_closed(self, window):
         self.ui.mdiArea.removeSubWindow(window)
-        self.undo.removeStack(window.canvas.undo_stack)
+        self.undo.removeStack(window.canvas.get_undo_stack())
 
     def closeEvent(self, event):
         confirmed = True
@@ -182,7 +183,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         else:
             fmt = self.get_format_by_filename(canvas.filename)
             fmt.save(canvas.filename, canvas)
-            canvas.dirty = False
+            canvas.set_clean()
             return True
 
     def get_file_extension_filters(self):
@@ -196,7 +197,8 @@ class DrawMainWindow(QtGui.QMainWindow):
         return self._formats[self.DEFAULT_FORMAT_MODULENAME] 
 
     def save_as(self):
-        if not self.get_active_canvas():
+        canvas = self.get_active_canvas()
+        if not canvas:
             return False
         filters = self.get_file_extension_filters()
         filter_string = ";;".join(filters)
@@ -211,7 +213,8 @@ class DrawMainWindow(QtGui.QMainWindow):
         fmt = self.get_format_by_filename(path)
         fmt.save(path, self.get_active_canvas())
         self.get_active_subwindow().filename = path
-        self.get_active_canvas().dirty = False
+        canvas.set_clean()
+        print "Canvas set as clean (save as)"
         return True
 
     def open(self):
@@ -308,7 +311,7 @@ class DrawMainWindow(QtGui.QMainWindow):
             self.undo.setActiveStack(None)
             return
         self.set_current_tool(canvas.tool)
-        self.undo.setActiveStack(canvas.undo_stack)
+        self.undo.setActiveStack(canvas.get_undo_stack())
 
     def changeEvent(self, event):
         if type(event) == QtCore.QEvent.LanguageChange:

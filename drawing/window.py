@@ -13,7 +13,7 @@ class Window(QtGui.QMdiSubWindow):
         self._main = main
 
     def closeEvent(self, event):
-        if not self.get_dirty():
+        if self.is_clean():
             event.accept()
             self.window_closed.emit(self)
             return
@@ -54,8 +54,8 @@ class Window(QtGui.QMdiSubWindow):
         self.setWindowTitle(filename)
         self._canvas.filename = filename
 
-    def get_dirty(self):  # fuck yea
-        return self.canvas.get_dirty()
+    def is_clean(self):
+        return self._canvas.is_clean()
 
     canvas = property(get_canvas, set_canvas)
     filename = property(get_filename, set_filename)

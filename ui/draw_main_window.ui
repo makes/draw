@@ -63,6 +63,8 @@
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -303,6 +305,14 @@
    </property>
    <property name="toolTip">
     <string>Exit application</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences...</string>
+   </property>
+   <property name="toolTip">
+    <string>Modify application settings</string>
    </property>
   </action>
  </widget>
