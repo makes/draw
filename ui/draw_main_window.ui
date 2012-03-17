@@ -70,6 +70,9 @@
     <property name="title">
      <string>Window</string>
     </property>
+    <addaction name="actionCascadeWindows"/>
+    <addaction name="actionTileWindows"/>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -145,7 +148,7 @@
      <normaloff>:/images/edit-undo.svg</normaloff>:/images/edit-undo.svg</iconset>
    </property>
    <property name="text">
-    <string>Undo</string>
+    <string>&amp;Undo</string>
    </property>
    <property name="toolTip">
     <string>Undo previous action</string>
@@ -160,7 +163,7 @@
      <normaloff>:/images/edit-redo.svg</normaloff>:/images/edit-redo.svg</iconset>
    </property>
    <property name="text">
-    <string>Redo</string>
+    <string>&amp;Redo</string>
    </property>
    <property name="toolTip">
     <string>Redo previously undone action</string>
@@ -301,7 +304,7 @@
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>&amp;Exit</string>
    </property>
    <property name="toolTip">
     <string>Exit application</string>
@@ -309,10 +312,29 @@
   </action>
   <action name="actionPreferences">
    <property name="text">
-    <string>Preferences...</string>
+    <string>&amp;Preferences...</string>
+   </property>
+   <property name="iconText">
+    <string>&amp;Preferences...</string>
    </property>
    <property name="toolTip">
     <string>Modify application settings</string>
+   </property>
+  </action>
+  <action name="actionCascadeWindows">
+   <property name="text">
+    <string>&amp;Cascade</string>
+   </property>
+   <property name="toolTip">
+    <string>Arrange windows in a cascaded pattern</string>
+   </property>
+  </action>
+  <action name="actionTileWindows">
+   <property name="text">
+    <string>&amp;Tile</string>
+   </property>
+   <property name="toolTip">
+    <string>Arrange windows in a tile pattern</string>
    </property>
   </action>
  </widget>

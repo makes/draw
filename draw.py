@@ -96,7 +96,11 @@ class DrawMainWindow(QtGui.QMainWindow):
         self.ui.actionOpen.triggered.connect(self.open)
         self.ui.actionClose.triggered.connect(self.close_active_subwindow)
         self.ui.actionExit.triggered.connect(self.exit)
-
+        self.ui.actionCascadeWindows.triggered.connect(
+            self.ui.mdiArea.cascadeSubWindows)
+        self.ui.actionTileWindows.triggered.connect(
+            self.ui.mdiArea.tileSubWindows)
+        
         # TODO make tools load dynamically
         self.ui.actionSelectPickTool.triggered.connect(
             functools.partial(self.set_current_tool, self.get_tool("Pick")))
@@ -295,8 +299,21 @@ class DrawMainWindow(QtGui.QMainWindow):
 
     def update_window_menu(self):
         self.ui.menuWindow.clear()
+        windows = self.get_subwindows()
 
-        for window in self.get_subwindows():
+        self.ui.menuWindow.addAction(self.ui.actionCascadeWindows)
+        self.ui.menuWindow.addAction(self.ui.actionTileWindows)
+        if len(windows) > 0:
+            self.ui.menuWindow.addSeparator()
+
+        if len(windows) <= 1:
+            self.ui.actionCascadeWindows.setEnabled(False)
+            self.ui.actionTileWindows.setEnabled(False)
+        else:
+            self.ui.actionCascadeWindows.setEnabled(True)
+            self.ui.actionTileWindows.setEnabled(True)
+
+        for window in windows:
             action = self.ui.menuWindow.addAction(window.windowTitle())
             action.setCheckable(True)
             action.setChecked(window == self.get_active_subwindow())
