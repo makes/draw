@@ -134,7 +134,6 @@ class DrawMainWindow(QtGui.QMainWindow):
             self.ui.actionSaveAs.setEnabled(True)
 
     def clean_changed(self, clean):
-        print "Clean changed: " + str(clean)
         self.update_file_actions(self.get_active_canvas())
 
     def new_subwindow(self, document = None):
@@ -218,7 +217,6 @@ class DrawMainWindow(QtGui.QMainWindow):
         fmt.save(path, self.get_active_canvas())
         self.get_active_subwindow().filename = path
         canvas.set_clean()
-        print "Canvas set as clean (save as)"
         return True
 
     def open(self):
