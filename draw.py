@@ -5,6 +5,7 @@ import inspect
 import pkgutil
 
 from ui.draw_main_window import Ui_MainWindow
+from preferences import PreferencesDialog
 
 import drawing
 import drawing.tools
@@ -15,8 +16,9 @@ class DrawMainWindow(QtGui.QMainWindow):
     DEFAULT_TOOL_CLASSNAME = "Pick"
     DEFAULT_FORMAT_MODULENAME = "svg"
 
-    def __init__(self):
+    def __init__(self, lang):
         self.ui_messages = UiMessages()
+        self.lang = lang
         self._new_count = 0
 
         # Get all drawing tools in module, instantiate and add to a dict.
@@ -39,33 +41,8 @@ class DrawMainWindow(QtGui.QMainWindow):
         self.ui.setupUi(self)
 
         # Create undo stuff
-        undo_placeholder = self.ui.actionUndo
-        redo_placeholder = self.ui.actionRedo
         self.undo = QtGui.QUndoGroup(self)
-        # Grab icon, tooltip, etc. from data created in Qt Designer
-        undo_action = self.undo.createUndoAction(self,
-                                                 undo_placeholder.text())
-        undo_action.setIcon(undo_placeholder.icon())
-        undo_action.setToolTip(undo_placeholder.toolTip())
-        undo_action.setShortcut(undo_placeholder.shortcut())
-        undo_action.setObjectName(undo_placeholder.objectName())
-        redo_action = self.undo.createRedoAction(self,
-                                                 redo_placeholder.text())
-        redo_action.setIcon(redo_placeholder.icon())
-        redo_action.setToolTip(redo_placeholder.toolTip())
-        redo_action.setShortcut(redo_placeholder.shortcut())
-        redo_action.setObjectName(redo_placeholder.objectName())
-        # Replace original actions with the newly created ones
-        self.ui.actionUndo = undo_action
-        self.ui.actionRedo = redo_action
-        self.ui.menuEdit.insertAction(undo_placeholder, self.ui.actionUndo)
-        self.ui.menuEdit.removeAction(undo_placeholder)
-        self.ui.menuEdit.insertAction(redo_placeholder, self.ui.actionRedo)
-        self.ui.menuEdit.removeAction(redo_placeholder)
-        self.ui.mainToolBar.insertAction(undo_placeholder, self.ui.actionUndo)
-        self.ui.mainToolBar.removeAction(undo_placeholder)
-        self.ui.mainToolBar.insertAction(redo_placeholder, self.ui.actionRedo)
-        self.ui.mainToolBar.removeAction(redo_placeholder)
+        self.update_undo_actions(self.ui.actionUndo, self.ui.actionRedo)
 
         # Add selector action info to each tool.
         # TODO tools should be fully dynamic to avoid this.
@@ -100,7 +77,8 @@ class DrawMainWindow(QtGui.QMainWindow):
             self.ui.mdiArea.cascadeSubWindows)
         self.ui.actionTileWindows.triggered.connect(
             self.ui.mdiArea.tileSubWindows)
-        
+        self.ui.actionPreferences.triggered.connect(self.preferences)
+
         # TODO make tools load dynamically
         self.ui.actionSelectPickTool.triggered.connect(
             functools.partial(self.set_current_tool, self.get_tool("Pick")))
@@ -147,7 +125,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         new_window.window_closed.connect(self.subwindow_closed)
         new_window.canvas.clean_changed.connect(self.clean_changed)
         self.ui.actionClose.setEnabled(True)
-        new_window.show()
+        new_window.showMaximized()
         return new_window
 
     def close_active_subwindow(self):
@@ -169,6 +147,13 @@ class DrawMainWindow(QtGui.QMainWindow):
                 event.ignore()
                 return
         event.accept()
+
+    def preferences(self):
+        dialog = PreferencesDialog(self,
+                                   self.lang.languages,
+                                   self.lang.get_current_language_index())
+        if dialog.exec_():
+            self.lang.select(dialog.get_language())
 
     def new_drawing(self):
         new_window = self.new_subwindow()
@@ -328,10 +313,39 @@ class DrawMainWindow(QtGui.QMainWindow):
         self.set_current_tool(canvas.tool)
         self.undo.setActiveStack(canvas.get_undo_stack())
 
+    def update_undo_actions(self, old_undo, old_redo):
+        """ A workaround for translation bug QTBUG-7324 """
+        # Grab icon, tooltip, etc. from data created in Qt Designer
+        undo_action = self.undo.createUndoAction(self,
+                                                 old_undo.text())
+        undo_action.setIcon(old_undo.icon())
+        undo_action.setToolTip(old_undo.toolTip())
+        undo_action.setShortcut(old_undo.shortcut())
+        undo_action.setObjectName(old_undo.objectName())
+        redo_action = self.undo.createRedoAction(self,
+                                                 old_redo.text())
+        redo_action.setIcon(old_redo.icon())
+        redo_action.setToolTip(old_redo.toolTip())
+        redo_action.setShortcut(old_redo.shortcut())
+        redo_action.setObjectName(old_redo.objectName())
+
+        # Replace original actions with the newly created ones
+        self.ui.actionUndo = undo_action
+        self.ui.actionRedo = redo_action
+        self.ui.menuEdit.insertAction(old_undo, self.ui.actionUndo)
+        self.ui.menuEdit.removeAction(old_undo)
+        self.ui.menuEdit.insertAction(old_redo, self.ui.actionRedo)
+        self.ui.menuEdit.removeAction(old_redo)
+        self.ui.mainToolBar.insertAction(old_undo, self.ui.actionUndo)
+        self.ui.mainToolBar.removeAction(old_undo)
+        self.ui.mainToolBar.insertAction(old_redo, self.ui.actionRedo)
+        self.ui.mainToolBar.removeAction(old_redo)
+
     def changeEvent(self, event):
-        if type(event) == QtCore.QEvent.LanguageChange:
+        if event.type() == QtCore.QEvent.LanguageChange:
             self.ui.retranslateUi(self)
             self.ui_messages.translate_messages()
+            self.update_undo_actions(self.ui.actionUndo, self.ui.actionRedo)
 
 class UiMessages(object):
     def __init__(self):
@@ -368,3 +382,4 @@ class UiMessages(object):
             "Open Drawing",
             None,
             QtGui.QApplication.UnicodeUTF8)
+

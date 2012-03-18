@@ -16,6 +16,10 @@ class CreateCommand(QtGui.QUndoCommand):
     def undo(self):
         self._scene.removeItem(self._item)
 
+    def changeEvent(self, event):
+        if event.type() == QtCore.QEvent.LanguageChange:
+            self._ui_messages.translate_messages()
+
 class UiMessages(object):
     def __init__(self):
         self.translate_messages()

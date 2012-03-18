@@ -17,3 +17,7 @@ class ToolOptionsPen(QtGui.QWidget):
     def color_selected(self, color):
         self.color_changed.emit(color)
 
+    def changeEvent(self, event):
+        if event.type() == QtCore.QEvent.LanguageChange:
+            self.ui.retranslateUi(self)
+

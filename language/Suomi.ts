@@ -11,7 +11,7 @@
 <context>
     <name>CreateCommand</name>
     <message>
-        <location filename="drawing/tools/commands/create.py" line="24"/>
+        <location filename="drawing/tools/commands/create.py" line="28"/>
         <source>Create</source>
         <translation>Luonti</translation>
     </message>
@@ -279,6 +279,29 @@
     </message>
 </context>
 <context>
+    <name>PreferencesDialog</name>
+    <message>
+        <location filename="ui/preferences_dialog.py" line="51"/>
+        <source>Preferences</source>
+        <translation>Asetukset</translation>
+    </message>
+    <message>
+        <location filename="ui/preferences_dialog.py" line="52"/>
+        <source>Language</source>
+        <translation>Kieli (Language)</translation>
+    </message>
+    <message>
+        <location filename="ui/preferences_dialog.py" line="53"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="ui/preferences_dialog.py" line="54"/>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+</context>
+<context>
     <name>Rect</name>
     <message>
         <location filename="drawing/tools/rect.py" line="85"/>
@@ -328,34 +351,44 @@
 <context>
     <name>UiMessages</name>
     <message>
-        <location filename="draw.py" line="343"/>
+        <location filename="draw.py" line="350"/>
         <source>You must open or create a drawing before activating these tools. Press Ctrl+N to create a new drawing.</source>
         <translation>Avaa tai luo uusi piirrustus ennen näiden työkalujen käyttöä. Paina Ctrl+N luodaksesi uuden piirroksen.</translation>
     </message>
     <message>
-        <location filename="draw.py" line="349"/>
+        <location filename="draw.py" line="356"/>
         <source>untitled-</source>
         <translation>nimetön-</translation>
     </message>
     <message>
-        <location filename="draw.py" line="354"/>
+        <location filename="draw.py" line="361"/>
         <source>Selected tool</source>
         <translation>Valittu työkalu</translation>
     </message>
     <message>
-        <location filename="draw.py" line="359"/>
+        <location filename="draw.py" line="366"/>
         <source>Save As</source>
         <translation>Tallenna nimellä</translation>
     </message>
     <message>
-        <location filename="draw.py" line="364"/>
+        <location filename="draw.py" line="371"/>
         <source>All supported file types</source>
         <translation>Kaikki tuetut tiedostotyypit</translation>
     </message>
     <message>
-        <location filename="draw.py" line="369"/>
+        <location filename="draw.py" line="376"/>
         <source>Open Drawing</source>
         <translation>Avaa piirros</translation>
+    </message>
+    <message>
+        <location filename="draw.py" line="381"/>
+        <source>&amp;Undo</source>
+        <translation>&amp;Kumoa</translation>
+    </message>
+    <message>
+        <location filename="draw.py" line="386"/>
+        <source>&amp;Redo</source>
+        <translation>&amp;Tee uudelleen</translation>
     </message>
 </context>
 <context>

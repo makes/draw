@@ -27,8 +27,8 @@ class ColorSwatch(QtGui.QFrame):
             self.set_color(color)
 
     def changeEvent(self, event):
-        if type(event) == QtCore.QEvent.LanguageChange:
-            self.ui_messages.translate_messages()
+        if event.type() == QtCore.QEvent.LanguageChange:
+            self._ui_messages.translate_messages()
 
     color = property(get_color, set_color)
 

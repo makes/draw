@@ -1,4 +1,5 @@
 SOURCES = ui/draw_main_window.py \
+          ui/preferences_dialog.py \
           draw.py \
           drawing/tools/pick.py \
           drawing/tools/pen.py \
@@ -11,4 +12,5 @@ SOURCES = ui/draw_main_window.py \
           widgets/color_swatch.pyw \
           drawing/window.py
 
-TRANSLATIONS = fi.ts
+TRANSLATIONS = language/English.ts \
+               language/Suomi.ts
