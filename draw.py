@@ -176,8 +176,12 @@ class DrawMainWindow(QtGui.QMainWindow):
             canvas.set_clean()
             return True
 
-    def get_file_extension_filters(self):
-        return [self._formats[fmt].FILTER_STRING for fmt in self._formats]
+    def get_file_extension_filters(self, operation):
+        filters = []
+        for fmt in self._formats:
+            if operation in self._formats[fmt].__dict__:
+                filters.append(self._formats[fmt].FILTER_STRING)
+        return filters
 
     def get_format_by_filename(self, filename):
         extension = os.path.splitext(str(filename))[1]
@@ -191,7 +195,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         if not canvas:
             return False
         self.deactivate_current_tool()
-        filters = self.get_file_extension_filters()
+        filters = self.get_file_extension_filters('save')
         filter_string = ";;".join(filters)
         dflt = self._formats[self.DEFAULT_FORMAT_MODULENAME].FILTER_STRING
         path = QtGui.QFileDialog.getSaveFileName(self,
@@ -208,10 +212,11 @@ class DrawMainWindow(QtGui.QMainWindow):
         return True
 
     def open(self):
-        filters = self.get_file_extension_filters()
+        filters = self.get_file_extension_filters('load')
         all_extensions = []
         for fmt in self._formats:
-            all_extensions += self._formats[fmt].FILE_EXTENSIONS
+            if 'load' in self._formats[fmt].__dict__:
+                all_extensions += self._formats[fmt].FILE_EXTENSIONS
         all_extensions = ["*%s" % e for e in all_extensions]
         all_extensions = " ".join(all_extensions)
         filter_all = "%s (%s)" % (self.ui_messages.all_supported_types,
