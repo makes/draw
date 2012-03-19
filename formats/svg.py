@@ -1,6 +1,6 @@
 import drawing
 
-from PyQt4 import QtGui
+from PyQt4 import QtCore, QtGui
 
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element, SubElement
@@ -23,6 +23,8 @@ def save(filename, canvas):
             _save_rect(svg, item)
         elif isinstance(item, QtGui.QGraphicsEllipseItem):
             _save_ellipse(svg, item)
+        elif isinstance(item, QtGui.QGraphicsTextItem):
+            _save_text(svg, item)
 
     file = open(filename, 'w')
     file.write(prettify_xml(svg))
@@ -34,7 +36,7 @@ def _pen_to_svg_attrib(pen):
     width = pen.widthF()
     if width == 0:
         width = 1.0
-    attrib['stroke-width'] = str(width)
+    attrib['stroke-width'] = str(width) + "px"
     return attrib
 
 def _brush_to_svg_attrib(brush):
@@ -73,6 +75,26 @@ def _save_ellipse(parent, ellipse):
     svg_ellipse.attrib.update(_brush_to_svg_attrib(ellipse.brush()))
     return svg_ellipse
 
+def _save_text(parent, text):
+    svg_text = SubElement(parent, 'text')
+    char_format = text.textCursor().charFormat()
+    content = str(text.document().toPlainText())
+    metrics = QtGui.QFontMetrics(char_format.font())
+    ypadding = (text.boundingRect().height() - float(metrics.height())) / 2
+    xpadding = (text.boundingRect().width() - float(metrics.width(content))) / 2
+    svg_text.set('x', str(text.x() + xpadding))
+    svg_text.set('y', str(text.y() + metrics.ascent() + ypadding + 0.5))
+    svg_text.set('font-family', str(char_format.fontFamily()))
+    svg_text.set('font-size', str(char_format.fontPointSize()) + "pt")
+    if char_format.font().kerning():
+        svg_text.set('kerning', 'auto')
+    stroke = _pen_to_svg_attrib(char_format.textOutline())
+    fill = _brush_to_svg_attrib(char_format.foreground())
+    svg_text.attrib.update(stroke)
+    svg_text.attrib.update(fill)
+    svg_text.text = content
+    return svg_text
+
 def load(filename, canvas):
     document = drawing.Document()
 
@@ -84,6 +106,8 @@ def load(filename, canvas):
             document.addItem(_load_rect(element))
         if tag == "ellipse":
             document.addItem(_load_ellipse(element))
+        if tag == "text":
+            _load_text(document, element)
 
     canvas.document = document
 
@@ -92,11 +116,26 @@ def _svg_attrib_to_pen(svg_attrib):
     if 'stroke' in svg_attrib:
         pen.setColor(get_qcolor(svg_attrib['stroke']))
     if 'stroke-width' in svg_attrib:
-        pen.setWidthF(float(svg_attrib['stroke-width']))
+        width = svg_attrib['stroke-width'].replace('px', '')
+        pen.setWidthF(float(width))
     return pen
 
 def _svg_attrib_to_brush(svg_attrib):
-    pass
+    brush = QtGui.QBrush(QtCore.Qt.transparent)
+    return brush
+
+def _svg_attrib_to_font(svg_attrib):
+    font = QtGui.QFont()
+    font.setKerning(False)
+    if 'font-family' in svg_attrib:
+        font.setFamily(svg_attrib['font-family'])
+    if 'font-size' in svg_attrib:
+        size = svg_attrib['font-size'].replace('pt', '')
+        font.setPointSizeF(float(size))
+    if 'kerning' in svg_attrib:
+        if svg_attrib['kerning'] == 'auto':
+            font.setKerning(True)
+    return font
 
 def _load_line(svg_line):
     pen = _svg_attrib_to_pen(svg_line.attrib)
@@ -126,6 +165,32 @@ def _load_ellipse(svg_ellipse):
                                          float(svg_ellipse.attrib['ry']) * 2)
     ellipse.setPen(pen)
     return ellipse
+
+def _load_text(document, svg_text):
+    pen = _svg_attrib_to_pen(svg_text.attrib)
+    brush = _svg_attrib_to_brush(svg_text.attrib)
+    font = _svg_attrib_to_font(svg_text.attrib)
+    content = svg_text.text.strip()
+    textitem = QtGui.QGraphicsTextItem()
+    charformat = QtGui.QTextCharFormat()
+    charformat.setFont(font)
+    charformat.setTextOutline(pen)
+    charformat.setForeground(brush)
+    cursor = QtGui.QTextCursor(textitem.document())
+    cursor.setCharFormat(charformat)
+    textitem.setTextCursor(cursor)
+    cursor.insertText(content)
+    metrics = QtGui.QFontMetrics(font)
+    document.addItem(textitem)
+    ypadding = (textitem.boundingRect().height()
+                - float(metrics.height())) / 2
+    xpadding = (textitem.boundingRect().width()
+                - float(metrics.width(content))) / 2
+    textitem.setX(float(svg_text.attrib['x']) - xpadding)
+    textitem.setY(float(svg_text.attrib['y'])
+                  - metrics.ascent()
+                  - ypadding
+                  - 0.5)
 
 def get_qcolor(rgb_string):
     if not rgb_string.lower().startswith('rgb('):

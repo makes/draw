@@ -14,6 +14,7 @@ class Rect(QtCore.QObject):
         self._object = None
         initial_color = QtGui.QColor(self.DEFAULT_COLOR)
         self._pen = QtGui.QPen(initial_color)
+        self._pen.setWidthF(3.0)
         self._options_widget = ToolOptionsRect(initial_color)
         self._connect_slots()
 
@@ -24,8 +25,12 @@ class Rect(QtCore.QObject):
         self._canvas = canvas
         canvas.document.installEventFilter(self)
 
+    def deselect(self):
+        if self._active:
+            self.finalize()
+
     def activate(self, point):
-        if not self._active:  # First click - create new line
+        if not self._active:  # First click - create new rectangle
             self._active = True
             self._object = self._canvas.document.addRect(point.x(),
                                                          point.y(),
@@ -73,7 +78,7 @@ class Rect(QtCore.QObject):
         return False
 
     def _set_color(self, color):
-        self._pen = QtGui.QPen(color)
+        self._pen.setColor(color)
 
     def get_options_widget(self):
         return self._options_widget

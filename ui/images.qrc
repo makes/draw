@@ -13,5 +13,6 @@
     <file>images/edit-redo.svg</file>
     <file>images/edit-undo.svg</file>
     <file>images/select-normal.svg</file>
+    <file>images/emblem-system.svg</file>
   </qresource>
 </RCC>

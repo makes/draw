@@ -19,7 +19,8 @@ class DrawMainWindow(QtGui.QMainWindow):
     def __init__(self, lang):
         self.ui_messages = UiMessages()
         self.lang = lang
-        self._new_count = 0
+        self.new_count = 0
+        self.current_tool = None
 
         # Get all drawing tools in module, instantiate and add to a dict.
         self._tools = {}
@@ -52,7 +53,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         self.get_tool("Rect").selector = \
             self.ui.actionSelectRectangleTool
         self.get_tool("Ellipse").selector = self.ui.actionSelectEllipseTool
-        #self.get_toolt"Text").selector = self.ui.actionSelectTextTool
+        self.get_tool("Text").selector = self.ui.actionSelectTextTool
 
         # Create a mutually exclusive action group for drawing tools
         self.ui.tool_selectors = QtGui.QActionGroup(self)
@@ -157,9 +158,9 @@ class DrawMainWindow(QtGui.QMainWindow):
 
     def new_drawing(self):
         new_window = self.new_subwindow()
-        self._new_count = self._new_count + 1
+        self.new_count = self.new_count + 1
         new_window.setWindowTitle(self.ui_messages.default_doc_name
-                                  + str(self._new_count))
+                                  + str(self.new_count))
         new_window.show()
 
     def save(self):
@@ -239,9 +240,12 @@ class DrawMainWindow(QtGui.QMainWindow):
             return None
 
     def clear_tool_selection(self):
+        if self.current_tool:
+            self.current_tool.deselect()
         for action in self.ui.tool_selectors.actions():
             action.setChecked(False)
         self.ui.toolOptionsDock.setWidget(None)
+        self.current_tool = None
 
     def update_tool_buttons(self, tool):
         """ Make sure the correct tool button shows as pressed """
@@ -251,19 +255,24 @@ class DrawMainWindow(QtGui.QMainWindow):
                 return
 
     def set_current_tool(self, tool):
-        self.ui.statusbar.clearMessage()
-        self.ui.toolOptionsDock.setWidget(None)
         canvas = self.get_active_canvas()
         if not canvas:
+            self.ui.toolOptionsDock.setWidget(None)
+            self.ui.statusbar.clearMessage()
             self.ui.statusbar.showMessage(self.ui_messages.tool_unavailable,
                                           8000)
             self.clear_tool_selection()
             return
-        self.ui.statusbar.showMessage(self.ui_messages.selected_tool + ": "
-                                      + tool.get_name(), 3000)
-        self.update_tool_buttons(tool)
-        self.ui.toolOptionsDock.setWidget(tool.options_widget)
-        canvas.set_current_tool(tool)
+        elif self.current_tool is not tool:
+            self.ui.toolOptionsDock.setWidget(None)
+            self.ui.statusbar.clearMessage()
+            if self.current_tool:
+                self.current_tool.deselect()
+            self.ui.statusbar.showMessage(self.ui_messages.selected_tool + ": "
+                                          + tool.get_name(), 3000)
+            self.update_tool_buttons(tool)
+            self.ui.toolOptionsDock.setWidget(tool.options_widget)
+            self.current_tool = canvas.set_current_tool(tool)
 
     def get_active_canvas(self):
         window = self.get_active_subwindow()
@@ -310,7 +319,7 @@ class DrawMainWindow(QtGui.QMainWindow):
             self.clear_tool_selection()
             self.undo.setActiveStack(None)
             return
-        self.set_current_tool(canvas.tool)
+        self.current_tool = self.set_current_tool(canvas.tool)
         self.undo.setActiveStack(canvas.get_undo_stack())
 
     def update_undo_actions(self, old_undo, old_redo):

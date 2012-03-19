@@ -5,7 +5,7 @@
     <message>
         <location filename="widgets/color_swatch.pyw" line="40"/>
         <source>Select Color</source>
-        <translation>Valitse väri</translation>
+        <translation>Select Color</translation>
     </message>
 </context>
 <context>
@@ -13,7 +13,7 @@
     <message>
         <location filename="drawing/tools/commands/create.py" line="28"/>
         <source>Create</source>
-        <translation>Luonti</translation>
+        <translation>Create</translation>
     </message>
 </context>
 <context>
@@ -21,7 +21,7 @@
     <message>
         <location filename="drawing/tools/ellipse.py" line="96"/>
         <source>Ellipse</source>
-        <translation>Ellipsi</translation>
+        <translation>Ellipse</translation>
     </message>
 </context>
 <context>
@@ -29,27 +29,42 @@
     <message>
         <location filename="ui/draw_main_window.py" line="172"/>
         <source>File</source>
-        <translation>Tiedosto</translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="173"/>
         <source>Edit</source>
-        <translation>Muokkaa</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="174"/>
         <source>Window</source>
-        <translation>Ikkuna</translation>
+        <translation>Window</translation>
+    </message>
+    <message>
+        <location filename="ui/draw_main_window.py" line="175"/>
+        <source>Drawing tools</source>
+        <translation>Drawing tools</translation>
+    </message>
+    <message>
+        <location filename="ui/draw_main_window.py" line="176"/>
+        <source>Main toolbar</source>
+        <translation>Main toolbar</translation>
+    </message>
+    <message>
+        <location filename="ui/draw_main_window.py" line="177"/>
+        <source>Tool Options</source>
+        <translation>Tool Options</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="178"/>
         <source>&amp;New</source>
-        <translation>&amp;Uusi</translation>
+        <translation>&amp;New</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="179"/>
         <source>Create new, empty drawing</source>
-        <translation>Luo uusi, tyhjä piirros</translation>
+        <translation>Create new, empty drawing</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="180"/>
@@ -57,14 +72,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="170"/>
-        <source>Undo</source>
-        <translation type="obsolete">Kumoa</translation>
+        <location filename="ui/draw_main_window.py" line="181"/>
+        <source>&amp;Undo</source>
+        <translation>&amp;Undo</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="182"/>
         <source>Undo previous action</source>
-        <translation>Peru viimeksi suoritettu toiminto</translation>
+        <translation>Undo previous action</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="183"/>
@@ -72,14 +87,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="173"/>
-        <source>Redo</source>
-        <translation type="obsolete">Tee uudelleen</translation>
+        <location filename="ui/draw_main_window.py" line="184"/>
+        <source>&amp;Redo</source>
+        <translation>&amp;Redo</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="185"/>
         <source>Redo previously undone action</source>
-        <translation>Suorita kumottu toiminto uudelleen</translation>
+        <translation>Redo previously undone action</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="186"/>
@@ -89,12 +104,12 @@
     <message>
         <location filename="ui/draw_main_window.py" line="187"/>
         <source>&amp;Save</source>
-        <translation>&amp;Tallenna</translation>
+        <translation>&amp;Save</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="188"/>
         <source>Save current drawing</source>
-        <translation>Tallenna piirros</translation>
+        <translation>Save current drawing</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="189"/>
@@ -104,12 +119,12 @@
     <message>
         <location filename="ui/draw_main_window.py" line="190"/>
         <source>&amp;Open</source>
-        <translation>&amp;Avaa</translation>
+        <translation>&amp;Open</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="191"/>
         <source>Open existing drawing</source>
-        <translation>Avaa olemassa oleva piirros</translation>
+        <translation>Open existing drawing</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="192"/>
@@ -119,147 +134,112 @@
     <message>
         <location filename="ui/draw_main_window.py" line="193"/>
         <source>Pick tool</source>
-        <translation>Valintatyökalu</translation>
+        <translation>Pick tool</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="194"/>
         <source>Select objects</source>
-        <translation>Valitse kohteita</translation>
+        <translation>Select objects</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="195"/>
         <source>Rectangle tool</source>
-        <translation>Suorakulmiotyökalu</translation>
+        <translation>Rectangle tool</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="196"/>
         <source>Draw rectangles</source>
-        <translation>Piirrä suorakulmioita</translation>
+        <translation>Draw rectangles</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="197"/>
         <source>Ellipse tool</source>
-        <translation>Ellipsityökalu</translation>
+        <translation>Ellipse tool</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="198"/>
         <source>Draw ellipses</source>
-        <translation>Piirrä ellipsejä</translation>
+        <translation>Draw ellipses</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="199"/>
         <source>Text tool</source>
-        <translation>Tekstityökalu</translation>
+        <translation>Text tool</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="200"/>
         <source>Add text to your drawing</source>
-        <translation>Lisää tekstiä piirrokseen</translation>
-    </message>
-    <message>
-        <location filename="ui/draw_main_window.py" line="203"/>
-        <source>&amp;Close</source>
-        <translation>&amp;Sulje</translation>
-    </message>
-    <message>
-        <location filename="ui/draw_main_window.py" line="204"/>
-        <source>Close current drawing</source>
-        <translation>Sulje piirros</translation>
-    </message>
-    <message>
-        <location filename="ui/draw_main_window.py" line="205"/>
-        <source>Save &amp;As...</source>
-        <translation>Tallenna &amp;nimellä...</translation>
-    </message>
-    <message>
-        <location filename="ui/draw_main_window.py" line="206"/>
-        <source>Save current drawing as a new file</source>
-        <translation>Tallenna piirros tiedostoon</translation>
-    </message>
-    <message>
-        <location filename="ui/draw_main_window.py" line="196"/>
-        <source>Exit</source>
-        <translation type="obsolete">Poistu</translation>
-    </message>
-    <message>
-        <location filename="ui/draw_main_window.py" line="208"/>
-        <source>Exit application</source>
-        <translation>Poistu ohjelmasta</translation>
+        <translation>Add text to your drawing</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="201"/>
         <source>Pen tool</source>
-        <translation>Kynätyökalu</translation>
+        <translation>Pen tool</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="202"/>
         <source>Draw lines</source>
-        <translation>Piirrä viivoja</translation>
+        <translation>Draw lines</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="175"/>
-        <source>Drawing tools</source>
-        <translation>Piirtotyökalut</translation>
+        <location filename="ui/draw_main_window.py" line="203"/>
+        <source>&amp;Close</source>
+        <translation>&amp;Close</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="176"/>
-        <source>Main toolbar</source>
-        <translation>Päätyökalupalkki</translation>
+        <location filename="ui/draw_main_window.py" line="204"/>
+        <source>Close current drawing</source>
+        <translation>Close current drawing</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="177"/>
-        <source>Tool Options</source>
-        <translation>Työkalun valinnat</translation>
+        <location filename="ui/draw_main_window.py" line="205"/>
+        <source>Save &amp;As...</source>
+        <translation>Save &amp;As...</translation>
     </message>
     <message>
-        <location filename="ui/draw_main_window.py" line="211"/>
-        <source>Modify application settings</source>
-        <translation>Muuta ohjelman asetuksia</translation>
-    </message>
-    <message>
-        <location filename="ui/draw_main_window.py" line="198"/>
-        <source>Preferences...</source>
-        <translation type="obsolete">Asetukset...</translation>
-    </message>
-    <message>
-        <location filename="ui/draw_main_window.py" line="181"/>
-        <source>&amp;Undo</source>
-        <translation>&amp;Kumoa</translation>
-    </message>
-    <message>
-        <location filename="ui/draw_main_window.py" line="184"/>
-        <source>&amp;Redo</source>
-        <translation>&amp;Tee uudelleen</translation>
+        <location filename="ui/draw_main_window.py" line="206"/>
+        <source>Save current drawing as a new file</source>
+        <translation>Save current drawing as a new file</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="207"/>
         <source>&amp;Exit</source>
-        <translation>&amp;Poistu</translation>
+        <translation>&amp;Exit</translation>
+    </message>
+    <message>
+        <location filename="ui/draw_main_window.py" line="208"/>
+        <source>Exit application</source>
+        <translation>Exit application</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="210"/>
         <source>&amp;Preferences...</source>
-        <translation>&amp;Asetukset...</translation>
+        <translation>&amp;Preferences...</translation>
+    </message>
+    <message>
+        <location filename="ui/draw_main_window.py" line="211"/>
+        <source>Modify application settings</source>
+        <translation>Modify application settings</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="212"/>
         <source>&amp;Cascade</source>
-        <translation>&amp;Päällekkäin</translation>
+        <translation>&amp;Cascade</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="213"/>
         <source>Arrange windows in a cascaded pattern</source>
-        <translation>Järjestä ikkunat päällekkäin</translation>
+        <translation>Arrange windows in a cascaded pattern</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="214"/>
         <source>&amp;Tile</source>
-        <translation>&amp;Vierekkäin</translation>
+        <translation>&amp;Tile</translation>
     </message>
     <message>
         <location filename="ui/draw_main_window.py" line="215"/>
         <source>Arrange windows in a tile pattern</source>
-        <translation>Järjestä ikkunat vierekkäin</translation>
+        <translation>Arrange windows in a tile pattern</translation>
     </message>
 </context>
 <context>
@@ -267,7 +247,7 @@
     <message>
         <location filename="drawing/tools/pen.py" line="87"/>
         <source>Pen</source>
-        <translation>Kynä</translation>
+        <translation>Pen</translation>
     </message>
 </context>
 <context>
@@ -275,7 +255,7 @@
     <message>
         <location filename="drawing/tools/pick.py" line="30"/>
         <source>Pick</source>
-        <translation>Valintatyökalu</translation>
+        <translation>Pick</translation>
     </message>
 </context>
 <context>
@@ -283,12 +263,12 @@
     <message>
         <location filename="ui/preferences_dialog.py" line="51"/>
         <source>Preferences</source>
-        <translation>Asetukset</translation>
+        <translation>Preferences</translation>
     </message>
     <message>
         <location filename="ui/preferences_dialog.py" line="52"/>
         <source>Language</source>
-        <translation type="obsolete">Kieli (Language)</translation>
+        <translation type="obsolete">Language</translation>
     </message>
     <message>
         <location filename="ui/preferences_dialog.py" line="53"/>
@@ -298,12 +278,12 @@
     <message>
         <location filename="ui/preferences_dialog.py" line="54"/>
         <source>Cancel</source>
-        <translation type="obsolete">Peruuta</translation>
+        <translation type="obsolete">Cancel</translation>
     </message>
     <message>
         <location filename="ui/preferences_dialog.py" line="52"/>
         <source>&amp;Language</source>
-        <translation>&amp;Kieli (Language)</translation>
+        <translation>&amp;Language</translation>
     </message>
     <message>
         <location filename="ui/preferences_dialog.py" line="53"/>
@@ -313,7 +293,7 @@
     <message>
         <location filename="ui/preferences_dialog.py" line="54"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Peruuta</translation>
+        <translation>&amp;Cancel</translation>
     </message>
 </context>
 <context>
@@ -321,7 +301,7 @@
     <message>
         <location filename="drawing/tools/rect.py" line="90"/>
         <source>Rectangle</source>
-        <translation>Suorakulmio</translation>
+        <translation>Rectangle</translation>
     </message>
 </context>
 <context>
@@ -329,7 +309,7 @@
     <message>
         <location filename="drawing/tools/text.py" line="104"/>
         <source>Text</source>
-        <translation>Teksti</translation>
+        <translation>Text</translation>
     </message>
 </context>
 <context>
@@ -337,12 +317,12 @@
     <message>
         <location filename="ui/tool_options_ellipse.py" line="48"/>
         <source>Tool Options: Ellipse</source>
-        <translation>Työkalun valinnat: Ellipse</translation>
+        <translation>Tool Options: Ellipse</translation>
     </message>
     <message>
         <location filename="ui/tool_options_ellipse.py" line="49"/>
         <source>Ellipse</source>
-        <translation>Ellipsi</translation>
+        <translation>Ellipse</translation>
     </message>
 </context>
 <context>
@@ -350,12 +330,12 @@
     <message>
         <location filename="ui/tool_options_pen.py" line="48"/>
         <source>Tool Options: Pen</source>
-        <translation>Työkalun valinnat: Kynä</translation>
+        <translation>Tool Options: Pen</translation>
     </message>
     <message>
         <location filename="ui/tool_options_pen.py" line="49"/>
         <source>Pen</source>
-        <translation>Kynä</translation>
+        <translation>Pen</translation>
     </message>
 </context>
 <context>
@@ -363,12 +343,12 @@
     <message>
         <location filename="ui/tool_options_rect.py" line="48"/>
         <source>Tool Options: Rectangle</source>
-        <translation>Työkalun valinnat: Suorakulmio</translation>
+        <translation>Tool Options: Rectangle</translation>
     </message>
     <message>
         <location filename="ui/tool_options_rect.py" line="49"/>
         <source>Rectangle</source>
-        <translation>Suorakulmio</translation>
+        <translation>Rectangle</translation>
     </message>
 </context>
 <context>
@@ -376,12 +356,12 @@
     <message>
         <location filename="ui/tool_options_text.py" line="48"/>
         <source>Tool Options: Text</source>
-        <translation>Työkalun valinnat: Teksti</translation>
+        <translation>Tool Options: Text</translation>
     </message>
     <message>
         <location filename="ui/tool_options_text.py" line="49"/>
         <source>Text</source>
-        <translation>Teksti</translation>
+        <translation>Text</translation>
     </message>
 </context>
 <context>
@@ -389,42 +369,42 @@
     <message>
         <location filename="draw.py" line="364"/>
         <source>You must open or create a drawing before activating these tools. Press Ctrl+N to create a new drawing.</source>
-        <translation>Avaa tai luo uusi piirrustus ennen näiden työkalujen käyttöä. Paina Ctrl+N luodaksesi uuden piirroksen.</translation>
+        <translation>You must open or create a drawing before activating these tools. Press Ctrl+N to create a new drawing.</translation>
     </message>
     <message>
         <location filename="draw.py" line="370"/>
         <source>untitled-</source>
-        <translation>nimetön-</translation>
+        <translation>untitled-</translation>
     </message>
     <message>
         <location filename="draw.py" line="375"/>
         <source>Selected tool</source>
-        <translation>Valittu työkalu</translation>
+        <translation>Selected tool</translation>
     </message>
     <message>
         <location filename="draw.py" line="380"/>
         <source>Save As</source>
-        <translation>Tallenna nimellä</translation>
+        <translation>Save As</translation>
     </message>
     <message>
         <location filename="draw.py" line="385"/>
         <source>All supported file types</source>
-        <translation>Kaikki tuetut tiedostotyypit</translation>
+        <translation>All supported file types</translation>
     </message>
     <message>
         <location filename="draw.py" line="390"/>
         <source>Open Drawing</source>
-        <translation>Avaa piirros</translation>
+        <translation>Open Drawing</translation>
     </message>
     <message>
         <location filename="draw.py" line="381"/>
         <source>&amp;Undo</source>
-        <translation type="obsolete">&amp;Kumoa</translation>
+        <translation type="obsolete">&amp;Undo</translation>
     </message>
     <message>
         <location filename="draw.py" line="386"/>
         <source>&amp;Redo</source>
-        <translation type="obsolete">&amp;Tee uudelleen</translation>
+        <translation type="obsolete">&amp;Redo</translation>
     </message>
 </context>
 <context>
@@ -432,35 +412,17 @@
     <message>
         <location filename="drawing/window.py" line="68"/>
         <source>Unsaved Changes</source>
-        <translation>Tallentamattomia muutoksia</translation>
+        <translation>Unsaved Changes</translation>
     </message>
     <message>
         <location filename="drawing/window.py" line="73"/>
         <source>The drawing has been modified.</source>
-        <translation>Piirrosta on muokattu.</translation>
-    </message>
-    <message>
-        <location filename="drawing/window.py" line="78"/>
-        <source>Do you want to save your changes?</source>
-        <translation type="obsolete">Tallennetaanko muutokset?</translation>
+        <translation>The drawing has been modified.</translation>
     </message>
     <message>
         <location filename="drawing/window.py" line="78"/>
         <source>Save changes?</source>
-        <translation>Tallennetaanko muutokset?</translation>
-    </message>
-</context>
-<context>
-    <name>toolOptionsPen</name>
-    <message>
-        <location filename="ui/tool_options_pen.py" line="49"/>
-        <source>Pen</source>
-        <translation type="obsolete">Kynä</translation>
-    </message>
-    <message>
-        <location filename="ui/tool_options_pen.py" line="48"/>
-        <source>Tool Options: Pen</source>
-        <translation type="obsolete">Työkalun valinnat: Kynä</translation>
+        <translation>Save changes?</translation>
     </message>
 </context>
 </TS>

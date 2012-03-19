@@ -14,6 +14,7 @@ class Ellipse(QtCore.QObject):
         self._object = None
         initial_color = QtGui.QColor(self.DEFAULT_COLOR)
         self._pen = QtGui.QPen(initial_color)
+        self._pen.setWidthF(3.0)
         self._options_widget = ToolOptionsEllipse(initial_color)
         self._connect_slots()
 
@@ -24,10 +25,14 @@ class Ellipse(QtCore.QObject):
         self._canvas = canvas
         canvas.document.installEventFilter(self)
 
+    def deselect(self):
+        if self._active:
+            self.finalize()
+
     def activate(self, point):
         self._canvas.setViewportUpdateMode(
             QtGui.QGraphicsView.FullViewportUpdate)
-        if not self._active:  # First click - create new line
+        if not self._active:  # First click - create new ellipse
             self._active = True
             self._object = self._canvas.document.addEllipse(point.x(),
                                                             point.y(),
@@ -79,7 +84,7 @@ class Ellipse(QtCore.QObject):
         return False
 
     def _set_color(self, color):
-        self._pen = QtGui.QPen(color)
+        self._pen.setColor(color)
 
     def get_options_widget(self):
         return self._options_widget

@@ -8,6 +8,8 @@ class Canvas(QtGui.QGraphicsView):
     
     def __init__(self, default_tool, document):
         super(Canvas, self).__init__(document)
+        self.setRenderHints(QtGui.QPainter.Antialiasing |
+                            QtGui.QPainter.SmoothPixmapTransform)
         self._current_tool = None
         self.set_current_tool(default_tool)
         self._filename = None
@@ -23,6 +25,7 @@ class Canvas(QtGui.QGraphicsView):
             self.document.removeEventFilter(self._current_tool)
         self._current_tool = tool
         tool.select(self)
+        return tool
 
     def execute(self, command):
         self._undo_stack.push(command)

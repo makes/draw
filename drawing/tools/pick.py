@@ -9,6 +9,9 @@ class Pick(QtCore.QObject):
         self._canvas = canvas
         canvas.document.installEventFilter(self)
 
+    def deselect(self):
+        pass
+
     def activate(self, point):
         pass
 

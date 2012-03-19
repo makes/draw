@@ -113,6 +113,12 @@
    <addaction name="actionRedo"/>
   </widget>
   <widget class="QDockWidget" name="toolOptionsDock">
+   <property name="minimumSize">
+    <size>
+     <width>50</width>
+     <height>38</height>
+    </size>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -311,6 +317,10 @@
    </property>
   </action>
   <action name="actionPreferences">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/images/emblem-system.svg</normaloff>:/images/emblem-system.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;Preferences...</string>
    </property>
