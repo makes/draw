@@ -107,7 +107,6 @@ class DrawMainWindow(QtGui.QMainWindow):
             self.ui.actionClose.setEnabled(False)
         elif canvas.is_clean():
             self.ui.actionSave.setEnabled(False)
-            self.ui.actionSaveAs.setEnabled(False)
         else:
             self.ui.actionSave.setEnabled(True)
             self.ui.actionSaveAs.setEnabled(True)
@@ -126,6 +125,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         new_window.window_closed.connect(self.subwindow_closed)
         new_window.canvas.clean_changed.connect(self.clean_changed)
         self.ui.actionClose.setEnabled(True)
+        self.ui.actionSaveAs.setEnabled(True)
         new_window.showMaximized()
         return new_window
 
@@ -170,6 +170,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         if not canvas.filename:
             return self.save_as()
         else:
+            self.deactivate_current_tool()
             fmt = self.get_format_by_filename(canvas.filename)
             fmt.save(canvas.filename, canvas)
             canvas.set_clean()
@@ -189,6 +190,7 @@ class DrawMainWindow(QtGui.QMainWindow):
         canvas = self.get_active_canvas()
         if not canvas:
             return False
+        self.deactivate_current_tool()
         filters = self.get_file_extension_filters()
         filter_string = ";;".join(filters)
         dflt = self._formats[self.DEFAULT_FORMAT_MODULENAME].FILTER_STRING
@@ -240,8 +242,7 @@ class DrawMainWindow(QtGui.QMainWindow):
             return None
 
     def clear_tool_selection(self):
-        if self.current_tool:
-            self.current_tool.deselect()
+        self.reset_current_tool()
         for action in self.ui.tool_selectors.actions():
             action.setChecked(False)
         self.ui.toolOptionsDock.setWidget(None)
@@ -254,8 +255,17 @@ class DrawMainWindow(QtGui.QMainWindow):
                 action.setChecked(True)
                 return
 
+    def reset_current_tool(self):
+        if self.current_tool:
+            self.current_tool.reset()
+
+    def deactivate_current_tool(self):
+        if self.current_tool:
+            self.current_tool.deactivate()
+
     def set_current_tool(self, tool):
         canvas = self.get_active_canvas()
+        self.reset_current_tool()
         if not canvas:
             self.ui.toolOptionsDock.setWidget(None)
             self.ui.statusbar.clearMessage()
@@ -263,16 +273,14 @@ class DrawMainWindow(QtGui.QMainWindow):
                                           8000)
             self.clear_tool_selection()
             return
-        elif self.current_tool is not tool:
+        if self.current_tool is not tool:
             self.ui.toolOptionsDock.setWidget(None)
             self.ui.statusbar.clearMessage()
-            if self.current_tool:
-                self.current_tool.deselect()
             self.ui.statusbar.showMessage(self.ui_messages.selected_tool + ": "
                                           + tool.get_name(), 3000)
             self.update_tool_buttons(tool)
             self.ui.toolOptionsDock.setWidget(tool.options_widget)
-            self.current_tool = canvas.set_current_tool(tool)
+        self.current_tool = canvas.set_current_tool(tool)
 
     def get_active_canvas(self):
         window = self.get_active_subwindow()
@@ -319,7 +327,8 @@ class DrawMainWindow(QtGui.QMainWindow):
             self.clear_tool_selection()
             self.undo.setActiveStack(None)
             return
-        self.current_tool = self.set_current_tool(canvas.tool)
+        self.set_current_tool(canvas.tool)
+        self.current_tool = canvas.tool
         self.undo.setActiveStack(canvas.get_undo_stack())
 
     def update_undo_actions(self, old_undo, old_redo):
