@@ -1,5 +1,6 @@
 from PyQt4 import QtCore, QtGui
 
+from drawing.tools.options.pick import ToolOptionsPick
 from drawing.tools.commands.move import MoveCommand
 from drawing.tools.commands.delete import DeleteCommand
 
@@ -9,9 +10,15 @@ class Pick(QtCore.QObject):
         self._canvas = None
         self._moving = False
         self._item_pos = QtCore.QPointF()
+        self._options_widget = ToolOptionsPick()
+        self._connect_slots()
+
+    def _connect_slots(self):
+        self._options_widget.color_changed.connect(self._set_color)
 
     def select(self, canvas):
         self._canvas = canvas
+        self._canvas.document.selectionChanged.connect(self._update_color)
         canvas.document.installEventFilter(self)
         canvas.setCursor(self.get_cursor())
 
@@ -80,8 +87,56 @@ class Pick(QtCore.QObject):
                         item.setSelected(True)
         return False
 
+    def _get_item_color(self, item):
+        if (isinstance(item, QtGui.QGraphicsLineItem) or
+            isinstance(item, QtGui.QGraphicsRectItem) or
+            isinstance(item, QtGui.QGraphicsEllipseItem)):
+            return item.pen().color()
+        if isinstance(item, QtGui.QGraphicsTextItem):
+            return item.textCursor().charFormat().textOutline().color()
+
+    def _set_item_color(self, item, color):
+        if (isinstance(item, QtGui.QGraphicsLineItem) or
+            isinstance(item, QtGui.QGraphicsRectItem) or
+            isinstance(item, QtGui.QGraphicsEllipseItem)):
+            pen = item.pen()
+            pen.setColor(color)
+            item.setPen(pen)
+        if isinstance(item, QtGui.QGraphicsTextItem):
+            # Manipulating TextItem's outline is ugly.
+            # So many layers :(
+            content = str(item.document().toPlainText())
+            cursor = item.textCursor()
+            charformat = cursor.charFormat()
+            pen = charformat.textOutline()
+            pen.setColor(color)
+            charformat.setTextOutline(pen)
+            for c in range(len(content)):
+                cursor.deletePreviousChar()
+            cursor.setCharFormat(charformat)
+            item.setTextCursor(cursor)
+            item.setTextCursor(cursor)
+            cursor.insertText(content)
+
+    def _update_color(self):
+        selection = self._canvas.document.selectedItems()
+        if len(selection) == 0:
+            self._options_widget.set_color(QtGui.QColor("white"))
+            self._options_widget.enable_color_selection(False)
+        else:
+            item = selection[0]
+            color = self._get_item_color(item)
+            self._options_widget.enable_color_selection(True)
+            self._options_widget.set_color(color)
+
+    def _set_color(self, color):
+        selection = self._canvas.document.selectedItems()
+        assert len(selection) > 0, "Can't set color if no object is selected."
+        for item in selection:
+            self._set_item_color(item, color)
+
     def get_options_widget(self):
-        return None
+        return self._options_widget
 
     @classmethod
     def get_name(self):

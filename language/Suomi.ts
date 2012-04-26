@@ -343,7 +343,7 @@
 <context>
     <name>Text</name>
     <message>
-        <location filename="drawing/tools/text.py" line="190"/>
+        <location filename="drawing/tools/text.py" line="197"/>
         <source>Text</source>
         <translation>Teksti</translation>
     </message>
@@ -353,7 +353,7 @@
     <message>
         <location filename="ui/tool_options_ellipse.py" line="48"/>
         <source>Tool Options: Ellipse</source>
-        <translation>Työkalun valinnat: Ellipse</translation>
+        <translation>Työkalun valinnat: Ellipsi</translation>
     </message>
     <message>
         <location filename="ui/tool_options_ellipse.py" line="49"/>
@@ -372,6 +372,19 @@
         <location filename="ui/tool_options_pen.py" line="49"/>
         <source>Pen</source>
         <translation>Kynä</translation>
+    </message>
+</context>
+<context>
+    <name>ToolOptionsPick</name>
+    <message>
+        <location filename="ui/tool_options_pick.py" line="49"/>
+        <source>Tool Options: Pick</source>
+        <translation>Työkalin valinnat: Valintatyökalu</translation>
+    </message>
+    <message>
+        <location filename="ui/tool_options_pick.py" line="50"/>
+        <source>Pick</source>
+        <translation>Valintatyökalu</translation>
     </message>
 </context>
 <context>

@@ -10,11 +10,14 @@ class ColorSwatch(QtGui.QFrame):
         self.set_color(QtGui.QColor("red"))
 
     def set_color(self, color):
+        self.set_color_no_event(color)
+        self.color_changed.emit(self._current_color)
+
+    def set_color_no_event(self, color):
         palette = self.palette()
         palette.setColor(self.backgroundRole(), color)
         self.setPalette(palette)
         self._current_color = color
-        self.color_changed.emit(self._current_color)
 
     def get_color(self):
         return self._current_color

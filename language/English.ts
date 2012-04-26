@@ -323,7 +323,7 @@
 <context>
     <name>Text</name>
     <message>
-        <location filename="drawing/tools/text.py" line="190"/>
+        <location filename="drawing/tools/text.py" line="197"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
@@ -352,6 +352,19 @@
         <location filename="ui/tool_options_pen.py" line="49"/>
         <source>Pen</source>
         <translation>Pen</translation>
+    </message>
+</context>
+<context>
+    <name>ToolOptionsPick</name>
+    <message>
+        <location filename="ui/tool_options_pick.py" line="49"/>
+        <source>Tool Options: Pick</source>
+        <translation>Tool Options: Pick</translation>
+    </message>
+    <message>
+        <location filename="ui/tool_options_pick.py" line="50"/>
+        <source>Pick</source>
+        <translation>Pick</translation>
     </message>
 </context>
 <context>
