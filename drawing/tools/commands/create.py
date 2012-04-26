@@ -12,6 +12,8 @@ class CreateCommand(QtGui.QUndoCommand):
     def redo(self):
         self._scene.addItem(self._item)
         self._item.setPos(self._position)
+        self._item.setFlag(QtGui.QGraphicsItem.ItemIsSelectable)
+        self._item.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
 
     def undo(self):
         self._scene.removeItem(self._item)

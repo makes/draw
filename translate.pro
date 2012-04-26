@@ -7,6 +7,8 @@ SOURCES = ui/draw_main_window.py \
           drawing/tools/ellipse.py \
           drawing/tools/text.py \
           drawing/tools/commands/create.py \
+          drawing/tools/commands/delete.py \
+          drawing/tools/commands/move.py \
           ui/tool_options_pen.py \
           ui/tool_options_rect.py \
           ui/tool_options_ellipse.py \

@@ -6,7 +6,8 @@ from drawing.tools.commands.create import CreateCommand
 
 class Text(QtCore.QObject):
     DEFAULT_COLOR = "purple"
-    
+    DEFAULT_FONT_SIZE = 48
+
     def __init__(self):
         super(Text, self).__init__()
         self._canvas = None
@@ -19,7 +20,7 @@ class Text(QtCore.QObject):
         self._format.setTextOutline(pen)
         brush = QtGui.QBrush(QtCore.Qt.transparent)
         self._format.setForeground(brush)
-        font = QtGui.QFont("Helvetica", 48)
+        font = QtGui.QFont("Helvetica", self.DEFAULT_FONT_SIZE)
         font.setKerning(False)
         self._format.setFont(font)
         self._cursor = None
@@ -28,6 +29,7 @@ class Text(QtCore.QObject):
 
     def _connect_slots(self):
         self._options_widget.color_changed.connect(self._set_color)
+        self._options_widget.font_size_changed.connect(self._set_font_size)
 
     def select(self, canvas):
         self._canvas = canvas
@@ -84,10 +86,15 @@ class Text(QtCore.QObject):
         self._active = False
 
     def eventFilter(self, obj, event):
+        if event.type() == QtCore.QEvent.GraphicsSceneMouseDoubleClick:
+            # Do nothing on double click.
+            return True
         if event.type() == QtCore.QEvent.GraphicsSceneMousePress:
+            return True
+        if event.type() == QtCore.QEvent.GraphicsSceneMouseRelease:
             self.activate(event.scenePos())
             return True
-        elif event.type() == QtCore.QEvent.KeyPress:
+        if event.type() == QtCore.QEvent.KeyPress:
             if event.key() == QtCore.Qt.Key_Escape:
                 self.abort()
         return False
@@ -96,6 +103,11 @@ class Text(QtCore.QObject):
         pen = self._format.textOutline()
         pen.setColor(color)
         self._format.setTextOutline(pen)
+
+    def _set_font_size(self, font_size):
+        font = self._format.font()
+        font.setPointSize(font_size)
+        self._format.setFont(font)
 
     def get_options_widget(self):
         return self._options_widget

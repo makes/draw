@@ -8,4 +8,5 @@ syntax: glob
 *.pyc
 *.qm
 ui/*.py
+doc
 

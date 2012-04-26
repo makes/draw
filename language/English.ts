@@ -11,15 +11,23 @@
 <context>
     <name>CreateCommand</name>
     <message>
-        <location filename="drawing/tools/commands/create.py" line="28"/>
+        <location filename="drawing/tools/commands/create.py" line="30"/>
         <source>Create</source>
         <translation>Create</translation>
     </message>
 </context>
 <context>
+    <name>DeleteCommand</name>
+    <message>
+        <location filename="drawing/tools/commands/delete.py" line="35"/>
+        <source>Delete</source>
+        <translation>Delete</translation>
+    </message>
+</context>
+<context>
     <name>Ellipse</name>
     <message>
-        <location filename="drawing/tools/ellipse.py" line="96"/>
+        <location filename="drawing/tools/ellipse.py" line="185"/>
         <source>Ellipse</source>
         <translation>Ellipse</translation>
     </message>
@@ -243,9 +251,17 @@
     </message>
 </context>
 <context>
+    <name>MoveCommand</name>
+    <message>
+        <location filename="drawing/tools/commands/move.py" line="32"/>
+        <source>Move</source>
+        <translation>Move</translation>
+    </message>
+</context>
+<context>
     <name>Pen</name>
     <message>
-        <location filename="drawing/tools/pen.py" line="87"/>
+        <location filename="drawing/tools/pen.py" line="176"/>
         <source>Pen</source>
         <translation>Pen</translation>
     </message>
@@ -253,7 +269,7 @@
 <context>
     <name>Pick</name>
     <message>
-        <location filename="drawing/tools/pick.py" line="30"/>
+        <location filename="drawing/tools/pick.py" line="88"/>
         <source>Pick</source>
         <translation>Pick</translation>
     </message>
@@ -299,7 +315,7 @@
 <context>
     <name>Rect</name>
     <message>
-        <location filename="drawing/tools/rect.py" line="90"/>
+        <location filename="drawing/tools/rect.py" line="179"/>
         <source>Rectangle</source>
         <translation>Rectangle</translation>
     </message>
@@ -307,7 +323,7 @@
 <context>
     <name>Text</name>
     <message>
-        <location filename="drawing/tools/text.py" line="104"/>
+        <location filename="drawing/tools/text.py" line="190"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
@@ -354,45 +370,50 @@
 <context>
     <name>ToolOptionsText</name>
     <message>
-        <location filename="ui/tool_options_text.py" line="48"/>
+        <location filename="ui/tool_options_text.py" line="57"/>
         <source>Tool Options: Text</source>
         <translation>Tool Options: Text</translation>
     </message>
     <message>
-        <location filename="ui/tool_options_text.py" line="49"/>
+        <location filename="ui/tool_options_text.py" line="58"/>
         <source>Text</source>
         <translation>Text</translation>
+    </message>
+    <message>
+        <location filename="ui/tool_options_text.py" line="59"/>
+        <source>Font size</source>
+        <translation>Font size</translation>
     </message>
 </context>
 <context>
     <name>UiMessages</name>
     <message>
-        <location filename="draw.py" line="364"/>
+        <location filename="draw.py" line="378"/>
         <source>You must open or create a drawing before activating these tools. Press Ctrl+N to create a new drawing.</source>
         <translation>You must open or create a drawing before activating these tools. Press Ctrl+N to create a new drawing.</translation>
     </message>
     <message>
-        <location filename="draw.py" line="370"/>
+        <location filename="draw.py" line="384"/>
         <source>untitled-</source>
         <translation>untitled-</translation>
     </message>
     <message>
-        <location filename="draw.py" line="375"/>
+        <location filename="draw.py" line="389"/>
         <source>Selected tool</source>
         <translation>Selected tool</translation>
     </message>
     <message>
-        <location filename="draw.py" line="380"/>
+        <location filename="draw.py" line="394"/>
         <source>Save As</source>
         <translation>Save As</translation>
     </message>
     <message>
-        <location filename="draw.py" line="385"/>
+        <location filename="draw.py" line="399"/>
         <source>All supported file types</source>
         <translation>All supported file types</translation>
     </message>
     <message>
-        <location filename="draw.py" line="390"/>
+        <location filename="draw.py" line="404"/>
         <source>Open Drawing</source>
         <translation>Open Drawing</translation>
     </message>

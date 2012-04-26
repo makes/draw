@@ -69,6 +69,10 @@ class Pen(QtCore.QObject):
         self._active = False
 
     def eventFilter(self, obj, event):
+        if event.type() == QtCore.QEvent.GraphicsSceneMouseDoubleClick:
+            return True
+        if event.type() == QtCore.QEvent.GraphicsSceneMousePress:
+            return True
         if event.type() == QtCore.QEvent.GraphicsSceneMouseRelease:
             self.activate(event.scenePos())
             return True

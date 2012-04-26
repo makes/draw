@@ -53,6 +53,26 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="lblFontSize">
+     <property name="text">
+      <string>Font size</string>
+     </property>
+     <property name="buddy">
+      <cstring>cboFontSize</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="cboFontSize">
+     <property name="editable">
+      <bool>false</bool>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

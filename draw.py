@@ -13,7 +13,7 @@ import drawing.tools
 import formats
 
 class DrawMainWindow(QtGui.QMainWindow):
-    DEFAULT_TOOL_CLASSNAME = "Pick"
+    DEFAULT_TOOL_CLASSNAME = "Pen"
     DEFAULT_FORMAT_MODULENAME = "svg"
 
     def __init__(self, lang):

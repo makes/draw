@@ -46,17 +46,17 @@ def _brush_to_svg_attrib(brush):
 
 def _save_line(parent, line):
     svg_line = SubElement(parent, 'line')
-    svg_line.set('x1', str(line.line().x1()))
-    svg_line.set('y1', str(line.line().y1()))
-    svg_line.set('x2', str(line.line().x2()))
-    svg_line.set('y2', str(line.line().y2()))
+    svg_line.set('x1', str(line.line().x1() + line.scenePos().x()))
+    svg_line.set('y1', str(line.line().y1() + line.scenePos().y()))
+    svg_line.set('x2', str(line.line().x2() + line.scenePos().x()))
+    svg_line.set('y2', str(line.line().y2() + line.scenePos().y()))
     svg_line.attrib.update(_pen_to_svg_attrib(line.pen()))
     return svg_line
 
 def _save_rect(parent, rect):
     svg_rect = SubElement(parent, 'rect')
-    svg_rect.set('x', str(rect.rect().x()))
-    svg_rect.set('y', str(rect.rect().y()))
+    svg_rect.set('x', str(rect.rect().x() + rect.scenePos().x()))
+    svg_rect.set('y', str(rect.rect().y() + rect.scenePos().y()))
     svg_rect.set('width', str(rect.rect().width()))
     svg_rect.set('height', str(rect.rect().height()))
     svg_rect.attrib.update(_pen_to_svg_attrib(rect.pen()))
@@ -65,8 +65,8 @@ def _save_rect(parent, rect):
 
 def _save_ellipse(parent, ellipse):
     svg_ellipse = SubElement(parent, 'ellipse')
-    rx = ellipse.rect().width() / 2
-    ry = ellipse.rect().height() / 2
+    rx = ellipse.rect().width() / 2 + ellipse.scenePos().x()
+    ry = ellipse.rect().height() / 2 + ellipse.scenePos().y()
     svg_ellipse.set('cx', str(ellipse.rect().x() + rx))
     svg_ellipse.set('cy', str(ellipse.rect().y() + ry))
     svg_ellipse.set('rx', str(rx))
@@ -144,6 +144,8 @@ def _load_line(svg_line):
                                    float(svg_line.attrib['x2']),
                                    float(svg_line.attrib['y2']))
     line.setPen(pen)
+    line.setFlag(QtGui.QGraphicsItem.ItemIsSelectable)
+    line.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
     return line
 
 def _load_rect(svg_rect):
@@ -153,6 +155,8 @@ def _load_rect(svg_rect):
                                    float(svg_rect.attrib['width']),
                                    float(svg_rect.attrib['height']))
     rect.setPen(pen)
+    rect.setFlag(QtGui.QGraphicsItem.ItemIsSelectable)
+    rect.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
     return rect
 
 def _load_ellipse(svg_ellipse):
@@ -164,6 +168,8 @@ def _load_ellipse(svg_ellipse):
                                          float(svg_ellipse.attrib['rx']) * 2,
                                          float(svg_ellipse.attrib['ry']) * 2)
     ellipse.setPen(pen)
+    ellipse.setFlag(QtGui.QGraphicsItem.ItemIsSelectable)
+    ellipse.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
     return ellipse
 
 def _load_text(document, svg_text):
@@ -182,6 +188,8 @@ def _load_text(document, svg_text):
     cursor.insertText(content)
     metrics = QtGui.QFontMetrics(font)
     document.addItem(textitem)
+    textitem.setFlag(QtGui.QGraphicsItem.ItemIsSelectable)
+    textitem.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
     ypadding = (textitem.boundingRect().height()
                 - float(metrics.height())) / 2
     xpadding = (textitem.boundingRect().width()
