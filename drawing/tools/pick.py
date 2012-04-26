@@ -3,6 +3,7 @@ from PyQt4 import QtCore, QtGui
 from drawing.tools.options.pick import ToolOptionsPick
 from drawing.tools.commands.move import MoveCommand
 from drawing.tools.commands.delete import DeleteCommand
+from drawing.tools.commands.set_color import SetColorCommand
 
 class Pick(QtCore.QObject):
     def __init__(self):
@@ -95,6 +96,7 @@ class Pick(QtCore.QObject):
         if isinstance(item, QtGui.QGraphicsTextItem):
             return item.textCursor().charFormat().textOutline().color()
 
+    """
     def _set_item_color(self, item, color):
         if (isinstance(item, QtGui.QGraphicsLineItem) or
             isinstance(item, QtGui.QGraphicsRectItem) or
@@ -117,6 +119,7 @@ class Pick(QtCore.QObject):
             item.setTextCursor(cursor)
             item.setTextCursor(cursor)
             cursor.insertText(content)
+    """
 
     def _update_color(self):
         selection = self._canvas.document.selectedItems()
@@ -133,7 +136,11 @@ class Pick(QtCore.QObject):
         selection = self._canvas.document.selectedItems()
         assert len(selection) > 0, "Can't set color if no object is selected."
         for item in selection:
-            self._set_item_color(item, color)
+            command = SetColorCommand(item,
+                                      self._canvas.document,
+                                      self._get_item_color(item),
+                                      color)
+            self._canvas.execute(command)
 
     def get_options_widget(self):
         return self._options_widget
